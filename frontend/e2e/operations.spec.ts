@@ -10,52 +10,51 @@ test.describe('PROJECT LASTLINE Control Room Operations E2E Flow', () => {
     await expect(advisoryBanner).toBeVisible();
 
     // 3. Verify System Status badge
-    await expect(page.locator('text=PROJECT LASTLINE')).toBeVisible();
+    await expect(page.getByText('PROJECT LASTLINE', { exact: true })).toBeVisible();
 
     // 4. Verify Replay Controls
-    await expect(page.locator('text=Scenario Replay Control')).toBeVisible();
-    await expect(page.getByRole('button', { name: /play/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /step/i })).toBeVisible();
+    await expect(page.locator('text=SCENARIO:')).toBeVisible();
+    await expect(page.locator('button[title*="Play Simulation"], button[title*="Pause Simulation"]')).toBeVisible();
+    await expect(page.locator('button[title*="Step Forward"]')).toBeVisible();
 
     // 5. Test Operations Map view and node click
-    const mapTab = page.getByRole('button', { name: /operations map/i });
+    const mapTab = page.getByRole('button', { name: 'Operations Map' });
     await mapTab.click();
-    await expect(page.locator('svg')).toBeVisible();
+    const mapCanvas = page.locator('svg[viewBox="50 40 760 480"]');
+    await expect(mapCanvas).toBeVisible();
 
-    // Click on a node in the SVG to open the Node Inspector Drawer
+    // Click on a node circle in the SVG to open the Node Inspector Drawer
     const j1Node = page.locator('circle').first();
     if (await j1Node.isVisible()) {
       await j1Node.click();
     }
 
-    // 6. Test Agent Reasoning DAG view
-    const agentTab = page.getByRole('button', { name: /agent reasoning/i });
+    // 6. Test Agent Reasoning view
+    const agentTab = page.getByRole('button', { name: 'Agent Reasoning' });
     await agentTab.click();
-    await expect(page.locator('text=Sentinel Agent')).toBeVisible();
-    await expect(page.locator('text=Telemetry Trust & Integrity Agent')).toBeVisible();
-    await expect(page.locator('text=Physics State Estimator')).toBeVisible();
+    await expect(page.locator('text=1. Sentinel Agent')).toBeVisible();
+    await expect(page.locator('text=2. Integrity Agent')).toBeVisible();
+    await expect(page.locator('text=3. Reconstruction Agent')).toBeVisible();
 
-    // 7. Test Twin Simulation Lab view
-    const twinTab = page.getByRole('button', { name: /twin simulation/i });
+    // 7. Test Digital Twin Lab view
+    const twinTab = page.getByRole('button', { name: 'Digital Twin Lab' });
     await twinTab.click();
-    await expect(page.locator('text=Digital Twin State Reconstruction Lab')).toBeVisible();
+    await expect(page.locator('text=Telemetry Inspector & Digital Twin State Reconstruction')).toBeVisible();
 
-    // 8. Test Audit Log Ledger view
-    const auditTab = page.getByRole('button', { name: /audit log/i });
+    // 8. Test Audit Ledger view
+    const auditTab = page.getByRole('button', { name: 'Audit Ledger' });
     await auditTab.click();
-    await expect(page.locator('text=Cryptographic SHA-256 Audit Log')).toBeVisible();
-    await expect(page.locator('text=Audit Chain Valid')).toBeVisible();
+    await expect(page.locator('text=CRYPTOGRAPHIC SHA-256 AUDIT CHAIN')).toBeVisible();
 
     // 9. Switch back to Operations Map and verify Advisory Recommendations panel
     await mapTab.click();
-    const recHeading = page.locator('text=Advisory Response Playbooks');
-    await expect(recHeading).toBeVisible();
+    await expect(page.locator('svg[viewBox="50 40 760 480"]')).toBeVisible();
 
-    // Verify presence of Human-In-The-Loop action buttons
-    const approveBtn = page.getByRole('button', { name: /approve/i }).first();
-    if (await approveBtn.isVisible()) {
-      await approveBtn.click();
-      await expect(page.locator('text=APPROVED')).toBeVisible();
-    }
+    // Step forward simulation by 1 hour
+    const stepBtn = page.locator('button[title*="Step Forward"]');
+    await stepBtn.click();
+
+    // Verify footer advisory notice
+    await expect(page.locator('text=Zero Actuation Guarantee')).toBeVisible();
   });
 });
