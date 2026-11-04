@@ -9,7 +9,6 @@ approval, simulated only in the twin. Build this guarantee into the architecture
 import ast
 from pathlib import Path
 
-
 FORBIDDEN_CONTROL_CALLS = {
     "pymodbus.client.sync.ModbusTcpClient.write_coil",
     "pymodbus.client.sync.ModbusTcpClient.write_register",

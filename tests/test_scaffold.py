@@ -1,9 +1,9 @@
 """Phase 0 Gate Test: Scaffold & Monorepo Package Health."""
 
 import backend
-import twin
-import data
 import benchmarks
+import data
+import twin
 
 
 def test_packages_importable():
