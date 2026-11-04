@@ -4,7 +4,7 @@
 > Values are empirical outputs from simulated runs on Verdant City Water System and BATADAL-based scenarios.
 > All evaluations enforce strict train/test split separation with fixed random seeds.
 
-**Last Run:** 2026-11-04T19:45:50.756668+00:00\n**Git Commit:** `b06cfdf`\n**Seed:** 42\n
+**Last Run:** 2026-11-04T19:53:30.141227+00:00\n**Git Commit:** `cbecd36`\n**Seed:** 42\n
 ---
 
 ## Phase 3: Telemetry Anomaly Detection & Trust Scoring
@@ -45,7 +45,7 @@
 | :--- | :--- | :--- | :--- |
 | **Contract & Integration Tests** | **30 / 30 Passed (100%)** | 100% Passing Suite | **PASS** |
 | **Code Coverage (Backend Agents)** | **95.0%** | $\ge 80.0\\%$ | **PASS** |
-| **Mean Multi-Agent Cycle Latency** | **98.61 ms** | < 200 ms | **PASS** |
+| **Mean Multi-Agent Cycle Latency** | **118.26 ms** | < 200 ms | **PASS** |
 | **Audit Log Cryptographic Integrity** | **100% Verified** | 100% Chain Valid | **PASS** |
 | **Tamper Detection Sensitivity** | **100%** | 100% Detection | **PASS** |
 | **Advisory Safety Guarantee (HITL)** | **100% Advisory Only** | 100% Require Operator Approval | **PASS** |
@@ -61,7 +61,20 @@
 | **Unsafe Playbook Rejection Rate** | **100.0%** | **100.0% Rejection** | **PASS** |
 | **Safe Playbook Verification Pass Rate** | **100.0%** | $\ge 90.0\\%$ | **PASS** |
 | **Evidence Balance Sheet Completeness** | **100.0%** (Evidence FOR + AGAINST + Assumptions) | 100% Mandatory | **PASS** |
-| **Mean Pre-Simulation Gating Latency** | **164.40 ms** | < 250 ms | **PASS** |
+| **Mean Pre-Simulation Gating Latency** | **143.62 ms** | < 250 ms | **PASS** |
+
+---
+
+## Phase 7: Real-Time Streaming API & Sandboxed Control Barrier
+
+**Backend Framework:** FastAPI, WebSockets, Pydantic v2\n**Streaming Frequency:** Live updates $\le 1.0$s\n**Safety Boundary:** Proven zero industrial control-write interfaces\n
+| Metric | Measured LASTLINE Output | Gate Target | Gate Status |
+| :--- | :--- | :--- | :--- |
+| **p95 REST Response Latency** | **110.66 ms** | < 200 ms | **PASS** |
+| **Mean REST Response Latency** | **39.38 ms** | — | — |
+| **WebSocket Streaming Latency** | **0.001 s** | $\le 1.0$ s | **PASS** |
+| **Read-Only Safety Verification** | **100% Verified** (0 write paths) | 100% Proved | **PASS** |
+| **API Test Suite Coverage** | **93.0%** | $\ge 80.0\\%$ | **PASS** |
 
 ---
 
@@ -73,7 +86,7 @@
 - [x] **Phase 4: Physical State Reconstruction & Attribution Gate** (`v0.4.0`)
 - [x] **Phase 5: Specialized Multi-Agent Intelligence Gate** (`v0.5.0`)
 - [x] **Phase 6: Advisory Fallback Recommendations Gate** (`v0.6.0`)
-- [ ] Phase 7: Real-Time Streaming API & Safety Boundary Gate
+- [x] **Phase 7: Real-Time Streaming API & Safety Boundary Gate** (`v0.7.0`)
 - [ ] Phase 8: Control Room Operations Frontend Gate
 - [ ] Phase 9: Hardening & Threat Model Gate
 - [ ] Phase 10: Production Release & Documentation Gate (`v1.0.0`)
