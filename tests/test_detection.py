@@ -69,11 +69,15 @@ def test_held_out_test_set_performance(detector_fixture):
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
     fpr = fp / (fp + tn) if (fp + tn) > 0 else 0.0
 
-    print(f"\n[Held-Out Test Results] Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {f1:.4f}, FPR: {fpr:.4f}")
+    print(
+        f"\n[Held-Out Test Results] Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {f1:.4f}, FPR: {fpr:.4f}"
+    )
 
     # Enforce Phase 3 Gate Criteria
     assert f1 >= 0.85, f"Phase 3 Gate Failure: F1 score {f1:.4f} is below target 0.85"
-    assert fpr <= 0.05, f"Phase 3 Gate Failure: False Positive Rate {fpr:.4f} exceeds target 0.05 (5%)"
+    assert fpr <= 0.05, (
+        f"Phase 3 Gate Failure: False Positive Rate {fpr:.4f} exceeds target 0.05 (5%)"
+    )
 
 
 def test_time_to_detect_better_than_baseline(detector_fixture, baseline_fixture):
@@ -113,7 +117,9 @@ def test_time_to_detect_better_than_baseline(detector_fixture, baseline_fixture)
     mean_engine_ttd = np.mean(engine_ttds)
     mean_baseline_ttd = np.mean(baseline_ttds)
 
-    print(f"\n[TTD Benchmark] LASTLINE Mean TTD: {mean_engine_ttd:.2f}h vs Baseline: {mean_baseline_ttd:.2f}h")
+    print(
+        f"\n[TTD Benchmark] LASTLINE Mean TTD: {mean_engine_ttd:.2f}h vs Baseline: {mean_baseline_ttd:.2f}h"
+    )
     assert mean_engine_ttd < mean_baseline_ttd, (
         f"LASTLINE TTD ({mean_engine_ttd:.2f}h) must be strictly better than baseline ({mean_baseline_ttd:.2f}h)"
     )
@@ -140,4 +146,6 @@ def test_sensor_and_plc_trust_scoring(detector_fixture):
     # PLC 2 trust must drop relative to other uncompromised PLCs (e.g. PLC 1)
     plc2_attack_trust = plc_trust.iloc[7:14]["PLC_2"].mean()
     plc1_attack_trust = plc_trust.iloc[7:14]["PLC_1"].mean()
-    assert plc2_attack_trust < plc1_attack_trust, "Targeted PLC trust must be lower than unaffected PLC"
+    assert plc2_attack_trust < plc1_attack_trust, (
+        "Targeted PLC trust must be lower than unaffected PLC"
+    )

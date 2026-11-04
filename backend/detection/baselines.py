@@ -6,6 +6,7 @@ Implements standard industry baselines:
 """
 
 from typing import Any
+
 import pandas as pd
 
 from twin.model import WaterNetworkTwin
@@ -20,7 +21,6 @@ class FixedThresholdDetector:
 
     def evaluate_telemetry(self, telemetry: pd.DataFrame) -> dict[str, Any]:
         """Evaluates telemetry using static high/low limits from sensor metadata."""
-        n_steps = len(telemetry)
         sensor_trust = pd.DataFrame(index=telemetry.index)
         sensor_alarms = pd.DataFrame(index=telemetry.index)
 

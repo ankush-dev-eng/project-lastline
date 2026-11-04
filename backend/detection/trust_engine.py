@@ -8,6 +8,7 @@ Combines:
 """
 
 from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -27,8 +28,10 @@ class TelemetryTrustEngine:
 
         # Continuous sensors eligible for freeze detection
         self.continuous_keys = [
-            k for k in self.sensor_keys
-            if self.sensors[k].sensor_type in (SensorType.TANK_LEVEL, SensorType.JUNCTION_PRESSURE, SensorType.PIPE_FLOW)
+            k
+            for k in self.sensor_keys
+            if self.sensors[k].sensor_type
+            in (SensorType.TANK_LEVEL, SensorType.JUNCTION_PRESSURE, SensorType.PIPE_FLOW)
         ]
 
         # Learned nominal statistics
@@ -57,7 +60,6 @@ class TelemetryTrustEngine:
             self.fit_nominal()
 
         df_telemetry = telemetry[self.sensor_keys].copy()
-        n_steps = len(df_telemetry)
         time_index = df_telemetry.index
         hours = (time_index // 3600) % 24
 
