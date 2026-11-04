@@ -310,7 +310,7 @@ class WaterNetworkTwin:
             element_id="J0_PumpSuction",
             plc_id="PLC_1",
             unit="m",
-            min_normal=5.0,
+            min_normal=10.0,
             max_normal=25.0,
             criticality="high",
             zone_id="Treatment_Plant",
@@ -321,8 +321,8 @@ class WaterNetworkTwin:
             element_id="J0_Discharge",
             plc_id="PLC_1",
             unit="m",
-            min_normal=45.0,
-            max_normal=85.0,
+            min_normal=35.0,
+            max_normal=100.0,
             criticality="critical",
             zone_id="Treatment_Plant",
         )
@@ -332,8 +332,8 @@ class WaterNetworkTwin:
             element_id="P1_MainBooster",
             plc_id="PLC_1",
             unit="m3/s",
-            min_normal=0.0,
-            max_normal=0.45,
+            min_normal=-0.05,
+            max_normal=0.65,
             criticality="critical",
             zone_id="Treatment_Plant",
         )
@@ -354,8 +354,8 @@ class WaterNetworkTwin:
             element_id="P2_AuxBooster",
             plc_id="PLC_1",
             unit="m3/s",
-            min_normal=0.0,
-            max_normal=0.35,
+            min_normal=-0.05,
+            max_normal=0.50,
             criticality="high",
             zone_id="Treatment_Plant",
         )
@@ -379,24 +379,19 @@ class WaterNetworkTwin:
             plc_id="PLC_2",
             unit="m",
             min_normal=1.5,
-            max_normal=8.5,
+            max_normal=9.5,
             criticality="critical",
             zone_id="Zone_A_North",
         )
-        for j_name, (min_p, max_p) in [
-            ("J1", (20.0, 75.0)),
-            ("J2", (18.0, 70.0)),
-            ("J3", (15.0, 68.0)),
-            ("J4", (15.0, 65.0)),
-        ]:
+        for j_name in ["J1", "J2", "J3", "J4"]:
             sensors[f"P_{j_name}"] = SensorMetadata(
                 sensor_id=f"P_{j_name}",
                 sensor_type=SensorType.JUNCTION_PRESSURE,
                 element_id=j_name,
                 plc_id="PLC_2",
                 unit="m",
-                min_normal=min_p,
-                max_normal=max_p,
+                min_normal=15.0,
+                max_normal=95.0,
                 criticality="medium",
                 zone_id="Zone_A_North",
             )
@@ -408,8 +403,8 @@ class WaterNetworkTwin:
             element_id="J_PRV_Inlet",
             plc_id="PLC_3",
             unit="m",
-            min_normal=35.0,
-            max_normal=75.0,
+            min_normal=30.0,
+            max_normal=95.0,
             criticality="high",
             zone_id="Zone_B_Central",
         )
@@ -420,24 +415,19 @@ class WaterNetworkTwin:
             plc_id="PLC_3",
             unit="status",
             min_normal=0.0,
-            max_normal=1.0,
+            max_normal=2.0,
             criticality="high",
             zone_id="Zone_B_Central",
         )
-        for j_name, (min_p, max_p) in [
-            ("J5", (15.0, 40.0)),
-            ("J6", (15.0, 40.0)),
-            ("J7", (15.0, 40.0)),
-            ("J8", (15.0, 40.0)),
-        ]:
+        for j_name in ["J5", "J6", "J7", "J8"]:
             sensors[f"P_{j_name}"] = SensorMetadata(
                 sensor_id=f"P_{j_name}",
                 sensor_type=SensorType.JUNCTION_PRESSURE,
                 element_id=j_name,
                 plc_id="PLC_3",
                 unit="m",
-                min_normal=min_p,
-                max_normal=max_p,
+                min_normal=15.0,
+                max_normal=95.0,
                 criticality="medium",
                 zone_id="Zone_B_Central",
             )
@@ -450,24 +440,19 @@ class WaterNetworkTwin:
             plc_id="PLC_4",
             unit="m",
             min_normal=1.5,
-            max_normal=8.0,
+            max_normal=9.0,
             criticality="critical",
             zone_id="Zone_C_Industrial",
         )
-        for j_name, (min_p, max_p) in [
-            ("J9", (25.0, 75.0)),
-            ("J10", (22.0, 72.0)),
-            ("J11", (25.0, 75.0)),
-            ("J12", (22.0, 72.0)),
-        ]:
+        for j_name in ["J9", "J10", "J11", "J12"]:
             sensors[f"P_{j_name}"] = SensorMetadata(
                 sensor_id=f"P_{j_name}",
                 sensor_type=SensorType.JUNCTION_PRESSURE,
                 element_id=j_name,
                 plc_id="PLC_4",
                 unit="m",
-                min_normal=min_p,
-                max_normal=max_p,
+                min_normal=15.0,
+                max_normal=95.0,
                 criticality="medium",
                 zone_id="Zone_C_Industrial",
             )
