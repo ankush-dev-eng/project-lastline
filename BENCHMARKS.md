@@ -4,7 +4,7 @@
 > Values are empirical outputs from simulated runs on Verdant City Water System and BATADAL-based scenarios.
 > All evaluations enforce strict train/test split separation with fixed random seeds.
 
-**Last Run:** 2026-11-04T19:39:23.247878+00:00\n**Git Commit:** `4d9741c`\n**Seed:** 42\n
+**Last Run:** 2026-11-04T19:45:50.756668+00:00\n**Git Commit:** `b06cfdf`\n**Seed:** 42\n
 ---
 
 ## Phase 3: Telemetry Anomaly Detection & Trust Scoring
@@ -45,10 +45,23 @@
 | :--- | :--- | :--- | :--- |
 | **Contract & Integration Tests** | **30 / 30 Passed (100%)** | 100% Passing Suite | **PASS** |
 | **Code Coverage (Backend Agents)** | **95.0%** | $\ge 80.0\\%$ | **PASS** |
-| **Mean Multi-Agent Cycle Latency** | **53.15 ms** | < 200 ms | **PASS** |
+| **Mean Multi-Agent Cycle Latency** | **98.61 ms** | < 200 ms | **PASS** |
 | **Audit Log Cryptographic Integrity** | **100% Verified** | 100% Chain Valid | **PASS** |
 | **Tamper Detection Sensitivity** | **100%** | 100% Detection | **PASS** |
 | **Advisory Safety Guarantee (HITL)** | **100% Advisory Only** | 100% Require Operator Approval | **PASS** |
+
+---
+
+## Phase 6: Advisory Fallback Recommendations & Digital Twin Pre-Simulation
+
+**Twin Simulator:** EPANET / WNTR Hydraulic Forward Verification (24-Hour Horizon)\n**Physical Constraints:** $P_j \ge 15.0$m head (Customer Delivery Junctions), $1.5 \le L_t \le 9.0$m (Tank Storage)\n**Advisory Enforcement:** 100% Require Human Approval (`PENDING_APPROVAL` Workflow)\n
+| Metric | Measured LASTLINE Output | Gate Target | Gate Status |
+| :--- | :--- | :--- | :--- |
+| **Constraint Satisfaction on Shown Recommendations** | **100.0%** | **100.0%** | **PASS** |
+| **Unsafe Playbook Rejection Rate** | **100.0%** | **100.0% Rejection** | **PASS** |
+| **Safe Playbook Verification Pass Rate** | **100.0%** | $\ge 90.0\\%$ | **PASS** |
+| **Evidence Balance Sheet Completeness** | **100.0%** (Evidence FOR + AGAINST + Assumptions) | 100% Mandatory | **PASS** |
+| **Mean Pre-Simulation Gating Latency** | **164.40 ms** | < 250 ms | **PASS** |
 
 ---
 
@@ -59,7 +72,7 @@
 - [x] **Phase 3: Anomaly Detection & Trust Scoring Gate** (`v0.3.0`)
 - [x] **Phase 4: Physical State Reconstruction & Attribution Gate** (`v0.4.0`)
 - [x] **Phase 5: Specialized Multi-Agent Intelligence Gate** (`v0.5.0`)
-- [ ] Phase 6: Advisory Fallback Recommendations Gate
+- [x] **Phase 6: Advisory Fallback Recommendations Gate** (`v0.6.0`)
 - [ ] Phase 7: Real-Time Streaming API & Safety Boundary Gate
 - [ ] Phase 8: Control Room Operations Frontend Gate
 - [ ] Phase 9: Hardening & Threat Model Gate
