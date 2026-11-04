@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap');
+      .title { font-family: 'Instrument Sans', sans-serif; font-weight: 700; fill: #F2EFE8; font-size: 20px; }
+      .header-txt { font-family: 'Instrument Sans', sans-serif; font-weight: 700; fill: #14181B; font-size: 14px; }
+      .sub-txt { font-family: 'Instrument Sans', sans-serif; font-size: 11px; fill: #576067; }
+      .mono-title { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; fill: #14181B; }
+      .mono-txt { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #20262B; }
+      .mono-white { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #F2EFE8; }
+      .gate-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; fill: #4F7A5A; }
+      .safety-badge { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; fill: #A8403A; }
+    </style>
+
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6F8F7B" />
+    </marker>
+    <marker id="dangerarrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#A8403A" />
+    </marker>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1100" height="620" rx="12" fill="#14181B" stroke="#2E383F" stroke-width="1.5" />
+
+  <!-- Title Header -->
+  <g transform="translate(40, 45)">
+    <text class="title">PROJECT LASTLINE: Multi-Agent Cyber-Resilience Architecture</text>
+    <text class="mono-white" y="24" opacity="0.8">Deterministic Multi-Agent State Reconstruction &amp; Pre-Simulated Advisory Decision Pipeline</text>
+  </g>
+
+  <!-- ZONE 1: Physical Infrastructure & Untrusted OT (Left) -->
+  <g transform="translate(40, 95)">
+    <rect width="210" height="480" rx="10" fill="#1D2327" stroke="#2A3238" stroke-width="1.5" />
+    <rect width="210" height="36" rx="10" fill="#2E383F" />
+    <text class="header-txt" x="15" y="23" fill="#F2EFE8">1. PHYSICAL OT &amp; SCADA</text>
+
+    <!-- Field Sensors & PLCs -->
+    <g transform="translate(15, 55)">
+      <rect width="180" height="60" rx="6" fill="#171C20" stroke="#2A3238" />
+      <text class="mono-title" x="12" y="22" fill="#F2EFE8">PLC 1: Highlands</text>
+      <text class="mono-txt" x="12" y="42" fill="#D9D4C7">Sensors: P_J1..J4, L_T1</text>
+    </g>
+
+    <g transform="translate(15, 125)">
+      <rect width="180" height="60" rx="6" fill="#171C20" stroke="#A8403A" stroke-width="1.5" />
+      <text class="mono-title" x="12" y="22" fill="#A8403A">PLC 2: Central [ATTACKED]</text>
+      <text class="mono-txt" x="12" y="42" fill="#D9D4C7">Sensors: P_J5..J8, PRV_1</text>
+    </g>
+
+    <g transform="translate(15, 195)">
+      <rect width="180" height="60" rx="6" fill="#171C20" stroke="#2A3238" />
+      <text class="mono-title" x="12" y="22" fill="#F2EFE8">PLC 3: Industrial</text>
+      <text class="mono-txt" x="12" y="42" fill="#D9D4C7">Sensors: P_J9..J12, L_T2</text>
+    </g>
+
+    <g transform="translate(15, 265)">
+      <rect width="180" height="60" rx="6" fill="#171C20" stroke="#2A3238" />
+      <text class="mono-title" x="12" y="22" fill="#F2EFE8">PLC 4: Main Station</text>
+      <text class="mono-txt" x="12" y="42" fill="#D9D4C7">Sensors: Pumps P1/P2, Clearwell</text>
+    </g>
+
+    <!-- Boundary Notice -->
+    <g transform="translate(15, 345)">
+      <rect width="180" height="110" rx="6" fill="#A8403A" fill-opacity="0.1" stroke="#A8403A" stroke-dasharray="3 3" />
+      <text class="safety-badge" x="12" y="25">DATA DIODE BOUNDARY</text>
+      <text class="mono-txt" x="12" y="45" fill="#D9D4C7">• Strictly Uni-directional</text>
+      <text class="mono-txt" x="12" y="62" fill="#D9D4C7">• Zero write channels</text>
+      <text class="mono-txt" x="12" y="79" fill="#D9D4C7">• No actuator commands</text>
+      <text class="mono-txt" x="12" y="96" fill="#D9D4C7">• Hardware-isolated tap</text>
+    </g>
+  </g>
+
+  <!-- Connectors from OT to Brain -->
+  <line x1="250" y1="230" x2="295" y2="230" stroke="#6F8F7B" stroke-width="2.5" marker-end="url(#arrowhead)" />
+  <text class="mono-white" x="252" y="218" font-size="8">SCADA TAP</text>
+
+  <!-- ZONE 2: Specialized Multi-Agent Intelligence Core (Center) -->
+  <g transform="translate(300, 95)">
+    <rect width="470" height="480" rx="10" fill="#1D2327" stroke="#2A3238" stroke-width="1.5" />
+    <rect width="470" height="36" rx="10" fill="#2E383F" />
+    <text class="header-txt" x="15" y="23" fill="#F2EFE8">2. LASTLINE ADVISORY INTELLIGENCE &amp; DIGITAL TWIN SANDBOX</text>
+
+    <!-- Agent 1: Sentinel -->
+    <g transform="translate(15, 50)">
+      <rect width="210" height="75" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="12" y="22">1. Sentinel Agent</text>
+      <text class="sub-txt" x="12" y="38">Cyber &amp; Network Invariants</text>
+      <text class="mono-txt" x="12" y="55">Flagged: P_J7 (+18.2m bias)</text>
+      <text class="mono-txt" x="12" y="68" fill="#A8403A">Threat: HIGH (Modbus anomaly)</text>
+    </g>
+
+    <!-- Flow Arrow 1 to 2 -->
+    <line x1="225" y1="87" x2="245" y2="87" stroke="#6F8F7B" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Agent 2: Integrity Engine -->
+    <g transform="translate(250, 50)">
+      <rect width="205" height="75" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="12" y="22">2. Integrity Agent</text>
+      <text class="sub-txt" x="12" y="38">Statistical Trust Scoring</text>
+      <text class="mono-txt" x="12" y="55">T(P_J7) = 0.00 (Quarantined)</text>
+      <text class="mono-txt" x="12" y="68" fill="#4F7A5A">System Alarm: ACTIVE (F1=1.0)</text>
+    </g>
+
+    <!-- Flow Arrow down to Reconstruction -->
+    <line x1="350" y1="125" x2="350" y2="145" stroke="#6F8F7B" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Agent 3: Reconstruction Engine -->
+    <g transform="translate(15, 145)">
+      <rect width="440" height="85" rx="6" fill="#F2EFE8" stroke="#6F8F7B" stroke-width="2" />
+      <text class="mono-title" x="15" y="24" fill="#6F8F7B">3. Reconstruction Agent (Bayesian WLS Engine)</text>
+      <text class="sub-txt" x="15" y="42">Hydraulic Mass Conservation &amp; Energy Loop Constraints</text>
+      <text class="mono-txt" x="15" y="60">Objective: min (y - Hx)ᵀ W (y - Hx)  where w_i = T_i² / σ²</text>
+      <text class="gate-badge" x="15" y="76">✓ 97.5% RMSE Reduction (10.88m → 0.27m) | 100% Top-3 Attribution</text>
+    </g>
+
+    <!-- Flow Arrow down to Impact & Twin -->
+    <line x1="235" y1="230" x2="235" y2="250" stroke="#6F8F7B" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Agent 4: Impact & Agent 5: Twin Gated Response -->
+    <g transform="translate(15, 250)">
+      <rect width="210" height="95" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="12" y="22">4. Impact Agent</text>
+      <text class="sub-txt" x="12" y="38">Downstream Disruption Risk</text>
+      <text class="mono-txt" x="12" y="56">Priority: Zone B (Hospital)</text>
+      <text class="mono-txt" x="12" y="70">Hospital Head: 22.3m (Safe)</text>
+      <text class="mono-txt" x="12" y="84">T1 Storage Buffer: 18.4 hrs</text>
+    </g>
+
+    <!-- Flow Arrow 4 to 5 -->
+    <line x1="225" y1="295" x2="245" y2="295" stroke="#6F8F7B" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <g transform="translate(250, 250)">
+      <rect width="205" height="95" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="12" y="22">5. Response Agent</text>
+      <text class="sub-txt" x="12" y="38">Twin Pre-Simulated Fallback</text>
+      <text class="mono-txt" x="12" y="56">Playbook: PB-RES-02</text>
+      <text class="mono-txt" x="12" y="70">EPANET Gate: P ≥ 15.0m</text>
+      <text class="gate-badge" x="12" y="86">✓ 100% Safe Playbook Gate</text>
+    </g>
+
+    <!-- Flow Arrow down to Explainer -->
+    <line x1="235" y1="345" x2="235" y2="365" stroke="#6F8F7B" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Agent 6: Explainer & Audit Log -->
+    <g transform="translate(15, 365)">
+      <rect width="440" height="90" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="15" y="22">6. Explainer Agent &amp; SHA-256 Cryptographic Ledger</text>
+      <text class="sub-txt" x="15" y="38">Evidence Balance Sheet &amp; Immutable Audit Trail</text>
+      <text class="mono-txt" x="15" y="56">Evidence FOR: Residual &gt; 4.5σ | AGAINST: 0 | Assumptions: 2</text>
+      <text class="mono-txt" x="15" y="70">Confidence: 96% | Mean Cycle Latency: 53.53 ms</text>
+      <text class="gate-badge" x="15" y="84">✓ SHA-256 Hash Chain: 100% Intact &amp; Tamper-Evident</text>
+    </g>
+  </g>
+
+  <!-- Connectors from Brain to Control Room -->
+  <line x1="770" y1="250" x2="815" y2="250" stroke="#6F8F7B" stroke-width="2.5" marker-end="url(#arrowhead)" />
+  <text class="mono-white" x="772" y="240" font-size="8">WS / REST</text>
+
+  <!-- ZONE 3: Operations Control Room & Human Operator (Right) -->
+  <g transform="translate(820, 95)">
+    <rect width="240" height="480" rx="10" fill="#1D2327" stroke="#2A3238" stroke-width="1.5" />
+    <rect width="240" height="36" rx="10" fill="#2E383F" />
+    <text class="header-txt" x="15" y="23" fill="#F2EFE8">3. CONTROL ROOM (HITL)</text>
+
+    <!-- Operations View Panel -->
+    <g transform="translate(15, 50)">
+      <rect width="210" height="110" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+      <text class="mono-title" x="12" y="22">Operations Map</text>
+      <text class="sub-txt" x="12" y="38">Dynamic Topology &amp; Zones</text>
+      <text class="mono-txt" x="12" y="56">• Real-time pressure badges</text>
+      <text class="mono-txt" x="12" y="72">• Flow direction &amp; velocities</text>
+      <text class="mono-txt" x="12" y="88">• Click-to-inspect drawers</text>
+      <text class="mono-txt" x="12" y="104">• Dual-series ±1.96σ charts</text>
+    </g>
+
+    <!-- HITL Advisory Approval Card -->
+    <g transform="translate(15, 175)">
+      <rect width="210" height="165" rx="6" fill="#F2EFE8" stroke="#6F8F7B" stroke-width="1.5" />
+      <text class="mono-title" x="12" y="22" fill="#6F8F7B">Advisory HITL Decision</text>
+      <text class="sub-txt" x="12" y="38">Human Operator Confirmation</text>
+      <text class="mono-txt" x="12" y="58" fill="#14181B">Playbook: PB-RES-02</text>
+      <text class="mono-txt" x="12" y="74" fill="#4F7A5A">Twin Verification: SAFE</text>
+      
+      <!-- Operator Buttons (Visual Representation) -->
+      <g transform="translate(12, 85)">
+        <rect width="85" height="26" rx="4" fill="#4F7A5A" />
+        <text class="mono-white" x="14" y="17" font-weight="700">APPROVE</text>
+      </g>
+      <g transform="translate(105, 85)">
+        <rect width="85" height="26" rx="4" fill="#A8403A" />
+        <text class="mono-white" x="20" y="17" font-weight="700">REJECT</text>
+      </g>
+      
+      <text class="mono-txt" x="12" y="132" font-size="8.5">• Requires Operator ID</text>
+      <text class="mono-txt" x="12" y="146" font-size="8.5">• Logs to SHA-256 Ledger</text>
+      <text class="mono-txt" x="12" y="160" font-size="8.5">• Zero automated actuation</text>
+    </g>
+
+    <!-- Manual Field Dispatch -->
+    <g transform="translate(15, 355)">
+      <rect width="210" height="100" rx="6" fill="#171C20" stroke="#2A3238" />
+      <text class="mono-title" x="12" y="22" fill="#F2EFE8">Out-of-Band Field Team</text>
+      <text class="mono-txt" x="12" y="44" fill="#D9D4C7">• Manual valve operation</text>
+      <text class="mono-txt" x="12" y="62" fill="#D9D4C7">• Physical gauge inspection</text>
+      <text class="mono-txt" x="12" y="80" fill="#D9D4C7">• Radio verbal protocol</text>
+    </g>
+  </g>
+</svg>

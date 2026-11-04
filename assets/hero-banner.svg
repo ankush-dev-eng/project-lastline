@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+      .brand-title { font-family: 'Instrument Sans', sans-serif; font-weight: 700; fill: #F2EFE8; font-size: 38px; letter-spacing: -0.02em; }
+      .brand-sub { font-family: 'Instrument Sans', sans-serif; font-weight: 600; fill: #6F8F7B; font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; }
+      .mono-txt { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #D9D4C7; }
+      .mono-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; fill: #F2EFE8; }
+      .badge-txt { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; fill: #A8403A; }
+      
+      @keyframes pulse-flow {
+        0% { stroke-dashoffset: 40; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-dot {
+        0%, 100% { r: 6px; opacity: 1; }
+        50% { r: 9px; opacity: 0.6; }
+      }
+      .flowing-pipe {
+        stroke-dasharray: 6 4;
+        animation: pulse-flow 2s linear infinite;
+      }
+      .pulsing-alert {
+        animation: pulse-dot 1.5s ease-in-out infinite;
+      }
+    </style>
+
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14181B" />
+      <stop offset="100%" stop-color="#1D2327" />
+    </linearGradient>
+
+    <linearGradient id="sageGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6F8F7B" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#4F7A5A" stop-opacity="0.8" />
+    </linearGradient>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6F8F7B" />
+    </marker>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="420" rx="16" fill="url(#bgGrad)" stroke="#2E383F" stroke-width="2" />
+
+  <!-- Subtitle & Brand Header -->
+  <g transform="translate(60, 65)">
+    <text class="brand-sub" y="0">CRITICAL WATER INFRASTRUCTURE RESILIENCE</text>
+    <text class="brand-title" y="42">PROJECT LASTLINE</text>
+    <text class="mono-txt" y="74">AI-Driven Cyber-Physical State Reconstruction &amp; Fail-Operational Twin Intelligence</text>
+
+    <!-- Advisory Safety Pill -->
+    <g transform="translate(0, 100)">
+      <rect width="470" height="30" rx="15" fill="#A8403A" fill-opacity="0.15" stroke="#A8403A" stroke-opacity="0.5" stroke-width="1.5" />
+      <circle cx="18" cy="15" r="4.5" fill="#A8403A" class="pulsing-alert" />
+      <text class="badge-txt" x="32" y="19">SANDBOX – ADVISORY ONLY (ZERO PHYSICAL ACTUATION)</text>
+    </g>
+  </g>
+
+  <!-- Metric Badges Column (Middle-Left) -->
+  <g transform="translate(60, 230)">
+    <g transform="translate(0, 0)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">PHYSICS RECON</text>
+      <text class="mono-val" x="14" y="48" fill="#6F8F7B">97.5% RMSE ↓</text>
+    </g>
+
+    <g transform="translate(195, 0)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">ANOMALY F1</text>
+      <text class="mono-val" x="14" y="48" fill="#4F7A5A">1.0000 (0% FPR)</text>
+    </g>
+
+    <g transform="translate(390, 0)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">TWIN CONSTRAINTS</text>
+      <text class="mono-val" x="14" y="48" fill="#C79A3B">100% GATED</text>
+    </g>
+
+    <g transform="translate(0, 80)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">CYCLE LATENCY</text>
+      <text class="mono-val" x="14" y="48" fill="#F2EFE8">53.5 ms</text>
+    </g>
+
+    <g transform="translate(195, 80)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">AUDIT INTEGRITY</text>
+      <text class="mono-val" x="14" y="48" fill="#6F8F7B">SHA-256 CHAIN</text>
+    </g>
+
+    <g transform="translate(390, 80)">
+      <rect width="180" height="65" rx="8" fill="#1D2327" stroke="#2E383F" stroke-width="1" />
+      <text class="mono-txt" x="14" y="24">ACTUATION WRITE</text>
+      <text class="mono-val" x="14" y="48" fill="#A8403A">0 ENDPOINTS</text>
+    </g>
+  </g>
+
+  <!-- Interactive Network Topology Canvas (Right Side) -->
+  <g transform="translate(680, 45)">
+    <rect width="470" height="330" rx="12" fill="#171C20" stroke="#2A3238" stroke-width="1" />
+
+    <!-- Zone Overlay Hints -->
+    <rect x="15" y="20" width="440" height="85" rx="6" fill="#6F8F7B" fill-opacity="0.06" stroke="#6F8F7B" stroke-opacity="0.2" stroke-dasharray="4 4" />
+    <text class="mono-txt" x="25" y="40" fill="#6F8F7B" font-size="10">ZONE A: NORTH HIGHLANDS (ELEV: 25-32m)</text>
+
+    <rect x="15" y="115" width="440" height="95" rx="6" fill="#C79A3B" fill-opacity="0.06" stroke="#C79A3B" stroke-opacity="0.2" stroke-dasharray="4 4" />
+    <text class="mono-txt" x="25" y="135" fill="#C79A3B" font-size="10">ZONE B: CIVIC &amp; HOSPITAL (CRITICAL FACILITY: J7)</text>
+
+    <rect x="15" y="220" width="440" height="90" rx="6" fill="#B5693E" fill-opacity="0.06" stroke="#B5693E" stroke-opacity="0.2" stroke-dasharray="4 4" />
+    <text class="mono-txt" x="25" y="240" fill="#B5693E" font-size="10">ZONE C: EASTSIDE INDUSTRIAL &amp; TECH PARK</text>
+
+    <!-- Pipes (Links) -->
+    <!-- Clearwell to Pump Suction -->
+    <line x1="50" y1="165" x2="105" y2="165" stroke="#6F8F7B" stroke-width="3" class="flowing-pipe" />
+    
+    <!-- Pump 1 to Highlands J1 -->
+    <line x1="105" y1="165" x2="170" y2="65" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="170" y1="65" x2="250" y2="65" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="250" y1="65" x2="330" y2="65" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="330" y1="65" x2="410" y2="65" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+
+    <!-- Pump 2 / PRV to Central J5..J7 -->
+    <line x1="105" y1="165" x2="170" y2="165" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="170" y1="165" x2="250" y2="165" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="250" y1="165" x2="330" y2="165" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="330" y1="165" x2="330" y2="195" stroke="#A8403A" stroke-width="2.5" stroke-dasharray="4 2" /> <!-- Attacked branch -->
+    <line x1="250" y1="165" x2="410" y2="165" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+
+    <!-- Industrial Branch J9..J12 -->
+    <line x1="170" y1="165" x2="210" y2="265" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="210" y1="265" x2="290" y2="265" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="290" y1="265" x2="370" y2="265" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+    <line x1="370" y1="265" x2="420" y2="265" stroke="#6F8F7B" stroke-width="2.5" class="flowing-pipe" />
+
+    <!-- Nodes -->
+    <!-- Reservoir Clearwell -->
+    <rect x="36" y="151" width="28" height="28" rx="4" fill="#4F7A5A" stroke="#F2EFE8" stroke-width="1.5" />
+    <text class="mono-txt" x="50" y="195" text-anchor="middle" font-size="9">R0</text>
+
+    <!-- Pump Station J0 -->
+    <circle cx="105" cy="165" r="7" fill="#6F8F7B" stroke="#F2EFE8" stroke-width="1.5" />
+    <text class="mono-txt" x="105" y="152" text-anchor="middle" font-size="9">PUMPS</text>
+
+    <!-- Tank 1 (Highlands) -->
+    <rect x="398" y="51" width="24" height="28" rx="3" fill="#385840" stroke="#F2EFE8" stroke-width="1.5" />
+    <text class="mono-txt" x="410" y="95" text-anchor="middle" font-size="9">T1</text>
+
+    <!-- Normal Junctions -->
+    <circle cx="170" cy="65" r="5" fill="#4F7A5A" />
+    <circle cx="250" cy="65" r="5" fill="#4F7A5A" />
+    <circle cx="330" cy="65" r="5" fill="#4F7A5A" />
+    <circle cx="170" cy="165" r="5" fill="#4F7A5A" />
+    <circle cx="250" cy="165" r="5" fill="#4F7A5A" />
+    
+    <!-- Compromised Node J7 (Hospital) with Pulsing Spoofing Indicator -->
+    <circle cx="330" cy="195" r="9" fill="#A8403A" class="pulsing-alert" />
+    <circle cx="330" cy="195" r="5" fill="#F2EFE8" />
+    <text class="badge-txt" x="330" y="218" text-anchor="middle" font-size="9">J7: HOSPITAL (SPOOFED +18m)</text>
+    <text class="mono-txt" x="330" y="230" text-anchor="middle" fill="#6F8F7B" font-size="8">WLS RECON: 22.3m (SAFE)</text>
+
+    <circle cx="410" cy="165" r="5" fill="#4F7A5A" />
+    <circle cx="210" cy="265" r="5" fill="#4F7A5A" />
+    <circle cx="290" cy="265" r="5" fill="#4F7A5A" />
+    <circle cx="370" cy="265" r="5" fill="#4F7A5A" />
+
+    <!-- Tank 2 (Eastside) -->
+    <rect x="408" y="251" width="24" height="28" rx="3" fill="#385840" stroke="#F2EFE8" stroke-width="1.5" />
+    <text class="mono-txt" x="420" y="295" text-anchor="middle" font-size="9">T2</text>
+  </g>
+</svg>

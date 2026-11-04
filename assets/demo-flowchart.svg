@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700&amp;family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+      .title { font-family: 'Instrument Sans', sans-serif; font-weight: 700; fill: #F2EFE8; font-size: 16px; }
+      .step-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; fill: #6F8F7B; }
+      .step-title { font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 13px; fill: #14181B; }
+      .step-desc { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #576067; }
+      .step-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; }
+    </style>
+    <marker id="flowarr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6F8F7B" />
+    </marker>
+  </defs>
+
+  <rect width="1000" height="320" rx="10" fill="#14181B" stroke="#2E383F" stroke-width="1.5" />
+
+  <text class="title" x="30" y="38">INCIDENT LIFECYCLE: From Cyber Spoofing to Twin-Verified Safe Continuity</text>
+  <text font-family="'JetBrains Mono', monospace" font-size="11" fill="#D9D4C7" x="30" y="58" opacity="0.8">
+    Walkthrough of Attack 01: Severe Sensor Bias (+18m at Hospital Junction J7)
+  </text>
+
+  <!-- Step 1: Attack Injected -->
+  <g transform="translate(30, 85)">
+    <rect width="165" height="200" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+    <text class="step-num" x="12" y="24">STAGE 01</text>
+    <text class="step-title" x="12" y="42">Cyber Attack</text>
+    <line x1="12" y1="52" x2="153" y2="52" stroke="#D9D4C7" />
+    <text class="step-desc" x="12" y="72">• Sensor P_J7 spoofed</text>
+    <text class="step-desc" x="12" y="88">• Raw reading: 40.5m</text>
+    <text class="step-desc" x="12" y="104">• +18.2m false bias</text>
+    <text class="step-desc" x="12" y="120">• Target: PLC_2</text>
+    
+    <rect x="12" y="155" width="141" height="30" rx="4" fill="#A8403A" fill-opacity="0.15" stroke="#A8403A" />
+    <text class="step-tag" x="18" y="174" fill="#A8403A">SCADA CORRUPTED</text>
+  </g>
+
+  <line x1="200" y1="185" x2="225" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+
+  <!-- Step 2: Detection & Trust -->
+  <g transform="translate(230, 85)">
+    <rect width="165" height="200" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+    <text class="step-num" x="12" y="24">STAGE 02</text>
+    <text class="step-title" x="12" y="42">Trust Scoring</text>
+    <line x1="12" y1="52" x2="153" y2="52" stroke="#D9D4C7" />
+    <text class="step-desc" x="12" y="72">• Residual: &gt; 4.5σ</text>
+    <text class="step-desc" x="12" y="88">• Trust: T(P_J7) = 0.00</text>
+    <text class="step-desc" x="12" y="104">• TTD: 0.00 hrs</text>
+    <text class="step-desc" x="12" y="120">• Sentinel alarm active</text>
+
+    <rect x="12" y="155" width="141" height="30" rx="4" fill="#C79A3B" fill-opacity="0.15" stroke="#C79A3B" />
+    <text class="step-tag" x="18" y="174" fill="#C79A3B">SENSOR QUARANTINED</text>
+  </g>
+
+  <line x1="400" y1="185" x2="425" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+
+  <!-- Step 3: State Reconstruction -->
+  <g transform="translate(430, 85)">
+    <rect width="165" height="200" rx="6" fill="#F2EFE8" stroke="#6F8F7B" stroke-width="1.5" />
+    <text class="step-num" x="12" y="24">STAGE 03</text>
+    <text class="step-title" x="12" y="42" fill="#6F8F7B">Physics Recon</text>
+    <line x1="12" y1="52" x2="153" y2="52" stroke="#D9D4C7" />
+    <text class="step-desc" x="12" y="72">• Bayesian WLS State</text>
+    <text class="step-desc" x="12" y="88">• Recon head: 22.3m</text>
+    <text class="step-desc" x="12" y="104">• ±0.44m 95% CI</text>
+    <text class="step-desc" x="12" y="120">• 97.5% RMSE drop</text>
+
+    <rect x="12" y="155" width="141" height="30" rx="4" fill="#4F7A5A" fill-opacity="0.15" stroke="#4F7A5A" />
+    <text class="step-tag" x="18" y="174" fill="#4F7A5A">GROUND TRUTH RESTORED</text>
+  </g>
+
+  <line x1="600" y1="185" x2="625" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+
+  <!-- Step 4: Twin Pre-Simulation -->
+  <g transform="translate(630, 85)">
+    <rect width="165" height="200" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+    <text class="step-num" x="12" y="24">STAGE 04</text>
+    <text class="step-title" x="12" y="42">Twin Gate</text>
+    <line x1="12" y1="52" x2="153" y2="52" stroke="#D9D4C7" />
+    <text class="step-desc" x="12" y="72">• Playbook: PB-RES-02</text>
+    <text class="step-desc" x="12" y="88">• EPANET 4-hr horizon</text>
+    <text class="step-desc" x="12" y="104">• Min pressure: 21.8m</text>
+    <text class="step-desc" x="12" y="120">• Tanks: [1.5m, 9.0m]</text>
+
+    <rect x="12" y="155" width="141" height="30" rx="4" fill="#4F7A5A" fill-opacity="0.15" stroke="#4F7A5A" />
+    <text class="step-tag" x="18" y="174" fill="#4F7A5A">HYDRAULICALLY VERIFIED</text>
+  </g>
+
+  <line x1="800" y1="185" x2="825" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+
+  <!-- Step 5: HITL Operator Signoff -->
+  <g transform="translate(830, 85)">
+    <rect width="140" height="200" rx="6" fill="#F2EFE8" stroke="#D9D4C7" />
+    <text class="step-num" x="12" y="24">STAGE 05</text>
+    <text class="step-title" x="12" y="42">HITL Signoff</text>
+    <line x1="12" y1="52" x2="128" y2="52" stroke="#D9D4C7" />
+    <text class="step-desc" x="12" y="72">• Human approval</text>
+    <text class="step-desc" x="12" y="88">• Operator: OP-42</text>
+    <text class="step-desc" x="12" y="104">• SHA-256 Ledger</text>
+    <text class="step-desc" x="12" y="120">• Zero actuation</text>
+
+    <rect x="12" y="155" width="116" height="30" rx="4" fill="#6F8F7B" fill-opacity="0.2" stroke="#6F8F7B" />
+    <text class="step-tag" x="16" y="174" fill="#14181B">AUDIT RECORDED</text>
+  </g>
+</svg>
