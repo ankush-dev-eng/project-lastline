@@ -10,8 +10,8 @@ Gate Requirements:
 import numpy as np
 import pytest
 
-from data.scenarios import AttackScenarioRegistry, AttackType, ScenarioResult
 from data.batadal import load_batadal_benchmark
+from data.scenarios import AttackScenarioRegistry, AttackType, ScenarioResult
 
 
 @pytest.fixture
@@ -91,7 +91,9 @@ def test_all_10_scenarios_generate_cleanly(registry):
         res = registry.generate_scenario(sc.scenario_id)
         assert res.labels["is_attack"].sum() > 0, f"Scenario {sc.scenario_id} missing attacks"
         assert not res.telemetry.empty, f"Scenario {sc.scenario_id} telemetry is empty"
-        assert not res.ground_truth_physical.empty, f"Scenario {sc.scenario_id} ground truth is empty"
+        assert not res.ground_truth_physical.empty, (
+            f"Scenario {sc.scenario_id} ground truth is empty"
+        )
 
 
 def test_batadal_loader_schema_and_labels():

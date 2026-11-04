@@ -7,6 +7,7 @@ for the Battle of the Attack Detection Algorithms (BATADAL) water distribution b
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -14,6 +15,7 @@ import pandas as pd
 @dataclass
 class BatadalDataset:
     """Standardized representation of a BATADAL benchmark dataset."""
+
     telemetry: pd.DataFrame
     labels: pd.DataFrame
     sensor_columns: list[str]
@@ -98,9 +100,24 @@ def generate_synthetic_batadal_benchmark(n_hours: int = 168, seed: int = 42) -> 
     df_telemetry.loc[attack3_mask, "P_J269"] -= 12.0
 
     intervals = [
-        {"attack_id": "BATADAL_ATTACK_1", "start": timestamps[30], "end": timestamps[45], "target": "L_T1"},
-        {"attack_id": "BATADAL_ATTACK_2", "start": timestamps[72], "end": timestamps[86], "target": "F_PU7"},
-        {"attack_id": "BATADAL_ATTACK_3", "start": timestamps[115], "end": timestamps[135], "target": "P_J280,P_J269"},
+        {
+            "attack_id": "BATADAL_ATTACK_1",
+            "start": timestamps[30],
+            "end": timestamps[45],
+            "target": "L_T1",
+        },
+        {
+            "attack_id": "BATADAL_ATTACK_2",
+            "start": timestamps[72],
+            "end": timestamps[86],
+            "target": "F_PU7",
+        },
+        {
+            "attack_id": "BATADAL_ATTACK_3",
+            "start": timestamps[115],
+            "end": timestamps[135],
+            "target": "P_J280,P_J269",
+        },
     ]
 
     return BatadalDataset(

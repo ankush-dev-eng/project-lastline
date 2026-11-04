@@ -6,6 +6,7 @@ against water infrastructure, producing compromised telemetry alongside ground-t
 
 from enum import Enum
 from typing import Any
+
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field
@@ -29,6 +30,7 @@ class AttackType(str, Enum):
 
 class ScenarioDefinition(BaseModel):
     """Specification of an operational attack or failure scenario."""
+
     scenario_id: str
     name: str
     description: str
@@ -42,6 +44,7 @@ class ScenarioDefinition(BaseModel):
 
 class ScenarioResult(BaseModel):
     """Result of running an attack scenario through the digital twin."""
+
     scenario_id: str
     telemetry: Any  # pd.DataFrame
     ground_truth_physical: Any  # pd.DataFrame
@@ -201,17 +204,7 @@ class AttackScenarioRegistry:
         twin = WaterNetworkTwin(seed=self.seed)
 
         # Handle physical plant manipulations (e.g. PLC pump or valve tampering)
-        if spec.attack_type == AttackType.PLC_SETPOINT_TAMPERING:
-            # Physically turn off pump P1 in the network model during the attack window
-            wn = twin.build_network()
-            # Run simulation
-            results = twin.simulate_baseline(duration_hours=duration_hours)
-        elif spec.attack_type == AttackType.VALVE_TAMPERING:
-            wn = twin.build_network()
-            # Simulate baseline
-            results = twin.simulate_baseline(duration_hours=duration_hours)
-        else:
-            results = twin.simulate_baseline(duration_hours=duration_hours)
+        results = twin.simulate_baseline(duration_hours=duration_hours)
 
         # Extract true physical ground truth
         df_ground_truth = twin.extract_telemetry(results, add_noise=False)
