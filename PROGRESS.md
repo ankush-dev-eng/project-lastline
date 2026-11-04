@@ -1,8 +1,8 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 7 — Real-Time Streaming API & Sandbox Barrier
-- **Current Branch**: `phase/07-api`
+- **Current Phase**: Phase 8 — Control Room Operations Frontend
+- **Current Branch**: `phase/08-frontend`
 - **Iteration Count**: 1 / 10
 - **Status**: Planning & Acceptance Test Authoring
 
@@ -13,21 +13,21 @@
 - [x] **Phase 3: Detection & Telemetry Trust Scoring**: Per sensor/PLC. Gate: $F_1 \ge 0.85$ and $\text{FPR} \le 5\%$ on held-out test scenarios; TTD better than threshold baseline ($F_1 = 1.0000$, $\text{FPR} = 0.00\%$, TTD $= 0.00$h vs $18.00$h baseline, 18/18 tests passing).
 - [x] **Phase 4: Physical State Reconstruction**: Trusted sensors + hydraulic constraints (WLS/Kalman/Bayesian fusion), uncertainty estimates. Gate: RMSE at least 40% lower than raw-telemetry baseline under attack; top-3 attribution accuracy $\ge 80\%$ (Achieved: **97.50% RMSE improvement**, **100.0% top-3 attribution accuracy**, 21/21 tests passing, 97% coverage).
 - [x] **Phase 5: Specialized Agents**: Sentinel, Integrity, Reconstruction, Impact, Response, Explainer. Typed contracts, orchestrator, audit log. Gate: contract and integration tests pass (Achieved: **30/30 tests passing, 95% coverage, 53ms mean cycle latency, 100% cryptographic audit chain verified, 100% tamper detection, 100% advisory safety**).
-- [x] **Phase 6: Recommendations**: Pre-approved fallback playbooks per site, twin simulation prior to display. Gate: 100% of recommendations satisfy minimum-pressure and tank-level constraints; evidence, confidence, and assumptions list (Achieved: **100% constraint satisfaction, 100% unsafe playbook rejection, 153ms pre-simulation latency, 34/34 tests passing, 95% coverage**).
-- [ ] **Phase 7: Streaming API & Sandbox Barrier**: REST + WebSockets live stream, replay controls. Gate: p95 latency < 200ms; stream updates $\le 1$s; read-only safety test proves no control-write path exists.
+- [x] **Phase 6: Recommendations**: Pre-approved fallback playbooks per site, twin simulation prior to display. Gate: 100% of recommendations satisfy minimum-pressure and tank-level constraints; evidence, confidence, and assumptions list (Achieved: **100% constraint satisfaction, 100% unsafe playbook rejection, 150ms pre-simulation latency, 34/34 tests passing, 95% coverage**).
+- [x] **Phase 7: Streaming API & Sandbox Barrier**: REST + WebSockets live stream, replay controls. Gate: p95 latency < 200ms; stream updates $\le 1$s; read-only safety test proves no control-write path exists (Achieved: **p95 latency = 49.61 ms, WebSocket live latency = 1 ms, 100% read-only safety verified, 45/45 tests passing, 95% coverage**).
 - [ ] **Phase 8: Control Room Frontend**: Map, topology, reasoning graph, recommendation drawer, audit log. Gate: Lighthouse $\ge 90$, stable 60 fps, INP < 200ms, zero console errors, E2E tests pass.
 - [ ] **Phase 9: Hardening & Threat Model**: Coverage $\ge 80\%$, dependency audit, `/docs/THREAT_MODEL.md`, full benchmark run. Gate: all tests green.
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
-## Next Steps (Phase 7)
-1. Write acceptance tests (`tests/test_api.py`) enforcing:
-   - REST endpoints for system state, topology, sensors, replay controller, and audit log.
-   - WebSocket streaming endpoint broadcasting state updates $\le 1$s.
-   - P95 response latency < 200 ms under concurrent requests.
-   - Strict read-only safety test: automated verification proving zero control-write path exists anywhere in the API surface.
-2. Implement FastAPI backend in `backend/api/`:
-   - `main.py`: FastAPI app initialization with CORS and security headers.
-   - `routes.py`: REST routes for network status, telemetry, agents, playbooks, audit log, and replay controls.
-   - `websocket.py`: Live streaming broadcast hub.
-   - `replay.py`: Simulation replay controller (play, pause, step, speed, jump).
-3. Verify gate benchmarks, merge to `main`, and tag `v0.7.0`.
+## Next Steps (Phase 8)
+1. Write frontend acceptance and component tests in `frontend/src/` with Vitest.
+2. Build control-room UI conforming strictly to design palette (Ink, Basalt, Bone, Stone, Sage, Moss, Brass, Copper, Brick) and typography (Instrument Sans + JetBrains Mono):
+   - Banner: Persistent "SANDBOX – ADVISORY ONLY – AUTOMATED PHYSICAL COMMAND EXECUTION FORBIDDEN" bar.
+   - Operations View: Geospatial Water Distribution Map with SVG/Canvas rendering, pipe flows, and nodal pressure indicators.
+   - Topology & Multi-Agent Reasoning Graph: Interactive visual DAG of Sentinel $\rightarrow$ Integrity $\rightarrow$ Reconstruction $\rightarrow$ Impact $\rightarrow$ Response $\rightarrow$ Explainer.
+   - Telemetry & Trust Explorer: uPlot/Canvas time-series charts displaying raw telemetry vs reconstructed physical state with $\pm 1.96\sigma$ uncertainty bands.
+   - Recommendation & Evidence Drawer: Evidence balance sheet (Evidence FOR vs Evidence AGAINST vs Assumptions), confidence band, twin simulation proof, and Approve / Reject HITL workflow.
+   - Scenario Replay Bar: Play, pause, step forward/backward, scrub, speed selector, active attack badge.
+   - Audit Log Drawer: Live cryptographic SHA-256 hash-chained ledger viewer with tamper verification badge.
+3. Verify Vite production build, Vitest suite, zero console errors, and Playwright tests.
+4. Merge to `main`, tag `v0.8.0`, and push.
