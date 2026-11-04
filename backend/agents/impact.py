@@ -85,7 +85,9 @@ class ImpactAgent:
                         "min_required_pressure_m": fac["min_pressure_m"],
                         "current_estimated_pressure_m": round(p_val, 2),
                         "deficit_m": round(fac["min_pressure_m"] - p_val, 2),
-                        "risk_level": SeverityLevel.CRITICAL if fac["min_pressure_m"] - p_val > 5.0 else SeverityLevel.HIGH,
+                        "risk_level": SeverityLevel.CRITICAL
+                        if fac["min_pressure_m"] - p_val > 5.0
+                        else SeverityLevel.HIGH,
                     }
                 )
 

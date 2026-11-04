@@ -62,10 +62,12 @@ async def websocket_live_stream(websocket: WebSocket):
 
 @app.get("/")
 def root():
-    return JSONResponse({
-        "system": "PROJECT LASTLINE",
-        "description": "AI-Driven Cyber-Resilience for Critical Water Infrastructure",
-        "status": "OPERATIONAL",
-        "safety_mode": "SANDBOX_ADVISORY_ONLY",
-        "docs_url": "/docs",
-    })
+    return JSONResponse(
+        {
+            "system": "PROJECT LASTLINE",
+            "description": "AI-Driven Cyber-Resilience for Critical Water Infrastructure",
+            "status": "OPERATIONAL",
+            "safety_mode": "SANDBOX_ADVISORY_ONLY",
+            "docs_url": "/docs",
+        }
+    )

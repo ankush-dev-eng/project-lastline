@@ -78,7 +78,8 @@ class AgentOrchestrator:
                 "system_alarm": integrity_rep.system_alarm,
                 "compromised_sensors": integrity_rep.compromised_sensors,
                 "mean_sensor_trust": round(
-                    sum(integrity_rep.sensor_trust.values()) / max(len(integrity_rep.sensor_trust), 1),
+                    sum(integrity_rep.sensor_trust.values())
+                    / max(len(integrity_rep.sensor_trust), 1),
                     3,
                 ),
             },
@@ -93,7 +94,9 @@ class AgentOrchestrator:
             action="PHYSICAL_STATE_RECONSTRUCTED",
             payload={
                 "stability_index": round(recon_rep.stability_index, 3),
-                "top_suspicious": [c["component_id"] for c in recon_rep.top_suspicious_components[:3]],
+                "top_suspicious": [
+                    c["component_id"] for c in recon_rep.top_suspicious_components[:3]
+                ],
             },
         )
 
@@ -118,7 +121,9 @@ class AgentOrchestrator:
                 "selected_playbook_id": response_rep.selected_playbook_id,
                 "actions_count": len(response_rep.recommended_actions),
                 "all_advisory": all(a.is_advisory for a in response_rep.recommended_actions),
-                "requires_approval": all(a.requires_human_approval for a in response_rep.recommended_actions),
+                "requires_approval": all(
+                    a.requires_human_approval for a in response_rep.recommended_actions
+                ),
             },
         )
 

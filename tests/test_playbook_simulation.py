@@ -47,14 +47,20 @@ def test_twin_simulation_validates_safe_playbooks(playbook_suite):
         playbook = catalog.get_playbook(pb_id)
         result = simulator.simulate_playbook(playbook, duration_hours=24)
 
-        assert result.is_valid is True, f"Playbook {pb_id} failed simulation: {result.constraint_violations}"
+        assert result.is_valid is True, (
+            f"Playbook {pb_id} failed simulation: {result.constraint_violations}"
+        )
         assert result.min_pressure_observed_m >= 15.0, (
             f"Playbook {pb_id} violated minimum pressure: {result.min_pressure_observed_m:.2f}m < 15.0m"
         )
         for tank_id, lvl in result.min_tank_levels.items():
-            assert lvl >= 1.5, f"Tank {tank_id} depleted below minimum level in {pb_id}: {lvl:.2f}m < 1.5m"
+            assert lvl >= 1.5, (
+                f"Tank {tank_id} depleted below minimum level in {pb_id}: {lvl:.2f}m < 1.5m"
+            )
         for tank_id, lvl in result.max_tank_levels.items():
-            assert lvl <= 9.0, f"Tank {tank_id} overflowed maximum level in {pb_id}: {lvl:.2f}m > 9.0m"
+            assert lvl <= 9.0, (
+                f"Tank {tank_id} overflowed maximum level in {pb_id}: {lvl:.2f}m > 9.0m"
+            )
 
 
 def test_twin_simulation_rejects_unsafe_playbooks(playbook_suite):
@@ -110,7 +116,9 @@ def test_100_percent_shown_recommendations_satisfy_constraints(playbook_suite):
                 f"Recommendation {rec.recommendation_id} tank level {rec.simulation_proof['min_tank_level_m']} < 1.5m"
             )
 
-    assert recommendations_shown >= 5, "Expected at least 5 validated recommendations across attack scenarios"
+    assert recommendations_shown >= 5, (
+        "Expected at least 5 validated recommendations across attack scenarios"
+    )
 
 
 def test_recommendation_evidence_confidence_and_assumptions(playbook_suite):
@@ -129,8 +137,12 @@ def test_recommendation_evidence_confidence_and_assumptions(playbook_suite):
     for rec in recs:
         # Structured Evidence
         assert rec.evidence.evidence_for, "Recommendation must carry evidence FOR"
-        assert rec.evidence.evidence_against, "Recommendation must honestly surface counter-evidence or risks"
-        assert rec.evidence.key_assumptions, "Recommendation must list explicit hydraulic assumptions"
+        assert rec.evidence.evidence_against, (
+            "Recommendation must honestly surface counter-evidence or risks"
+        )
+        assert rec.evidence.key_assumptions, (
+            "Recommendation must list explicit hydraulic assumptions"
+        )
         # Confidence Band
         assert 0.0 <= rec.confidence <= 1.0, f"Confidence {rec.confidence} out of range [0, 1]"
         # Human approval advisory workflow

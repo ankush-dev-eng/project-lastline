@@ -57,7 +57,8 @@ class RecommendationEngine:
         # Candidate selection based on zone
         all_playbooks = self.catalog.list_playbooks()
         candidates = [
-            pb for pb in all_playbooks
+            pb
+            for pb in all_playbooks
             if pb.target_zone == affected_zone or pb.target_zone == "Zone_A_North"
         ]
         if not candidates:
@@ -102,8 +103,12 @@ class RecommendationEngine:
                 simulated_safe=True,
                 simulation_proof={
                     "min_pressure_m": sim_res.min_pressure_observed_m,
-                    "min_tank_level_m": min(sim_res.min_tank_levels.values()) if sim_res.min_tank_levels else 3.5,
-                    "max_tank_level_m": max(sim_res.max_tank_levels.values()) if sim_res.max_tank_levels else 7.5,
+                    "min_tank_level_m": min(sim_res.min_tank_levels.values())
+                    if sim_res.min_tank_levels
+                    else 3.5,
+                    "max_tank_level_m": max(sim_res.max_tank_levels.values())
+                    if sim_res.max_tank_levels
+                    else 7.5,
                     "execution_time_ms": sim_res.execution_time_ms,
                 },
                 evidence=EvidencePair(

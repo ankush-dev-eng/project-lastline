@@ -307,7 +307,9 @@ def evaluate_phase6_benchmarks(seed: int = 42) -> dict[str, float]:
     unsafe_rejected = sum(1 for pb in unsafe_pbs if not simulator.simulate_playbook(pb).is_valid)
 
     safe_pass_rate = float((safe_passed / len(safe_pbs)) * 100.0 if safe_pbs else 100.0)
-    unsafe_rejection_rate = float((unsafe_rejected / len(unsafe_pbs)) * 100.0 if unsafe_pbs else 100.0)
+    unsafe_rejection_rate = float(
+        (unsafe_rejected / len(unsafe_pbs)) * 100.0 if unsafe_pbs else 100.0
+    )
 
     test_scenarios = [
         "SCENARIO_08_COORDINATED_FDIA",
@@ -346,7 +348,9 @@ def evaluate_phase6_benchmarks(seed: int = 42) -> dict[str, float]:
                 satisfying_constraints += 1
 
     constraint_satisfaction_rate = float(
-        (satisfying_constraints / shown_recommendations) * 100.0 if shown_recommendations > 0 else 100.0
+        (satisfying_constraints / shown_recommendations) * 100.0
+        if shown_recommendations > 0
+        else 100.0
     )
     mean_presim_latency_ms = float(np.mean(latencies_ms))
 
@@ -409,7 +413,9 @@ def evaluate_phase7_benchmarks() -> dict[str, float]:
             "start_pump_hardware",
             "set_valve_hardware",
         ]
-        route_functions = [obj for name, obj in inspect.getmembers(routes) if inspect.isfunction(obj)]
+        route_functions = [
+            obj for name, obj in inspect.getmembers(routes) if inspect.isfunction(obj)
+        ]
         violations = 0
         for fn in route_functions:
             source = inspect.getsource(fn).lower()
@@ -453,11 +459,11 @@ def update_benchmarks_markdown(
 
 | Metric | LASTLINE Trust Engine | Naive SCADA Baseline (Fixed Bounds) | Gate Target | Gate Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **F1 Score** | **{p3_metrics['engine_f1']:.4f}** | {p3_metrics['baseline_f1']:.4f} | $\ge 0.85$ | **PASS** |
-| **Precision** | **{p3_metrics['engine_prec']:.4f}** | {p3_metrics['baseline_prec']:.4f} | — | — |
-| **Recall** | **{p3_metrics['engine_rec']:.4f}** | {p3_metrics['baseline_rec']:.4f} | — | — |
-| **False Positive Rate (FPR)** | **{p3_metrics['engine_fpr'] * 100.0:.2f}%** | {p3_metrics['baseline_fpr'] * 100.0:.2f}% | $\le 5.0\\%$ | **PASS** |
-| **Mean Time-to-Detect (TTD)** | **{p3_metrics['engine_ttd']:.2f} hours** | {p3_metrics['baseline_ttd']:.2f} hours | < Baseline | **PASS** |
+| **F1 Score** | **{p3_metrics["engine_f1"]:.4f}** | {p3_metrics["baseline_f1"]:.4f} | $\ge 0.85$ | **PASS** |
+| **Precision** | **{p3_metrics["engine_prec"]:.4f}** | {p3_metrics["baseline_prec"]:.4f} | — | — |
+| **Recall** | **{p3_metrics["engine_rec"]:.4f}** | {p3_metrics["baseline_rec"]:.4f} | — | — |
+| **False Positive Rate (FPR)** | **{p3_metrics["engine_fpr"] * 100.0:.2f}%** | {p3_metrics["baseline_fpr"] * 100.0:.2f}% | $\le 5.0\\%$ | **PASS** |
+| **Mean Time-to-Detect (TTD)** | **{p3_metrics["engine_ttd"]:.2f} hours** | {p3_metrics["baseline_ttd"]:.2f} hours | < Baseline | **PASS** |
 
 ---
 
@@ -469,9 +475,9 @@ def update_benchmarks_markdown(
 
 | Metric | Raw Corrupted Telemetry | LASTLINE Physics-Reconstructed State | Target | Gate Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Continuous State RMSE** | {p4_metrics['raw_rmse']:.4f} m | **{p4_metrics['recon_rmse']:.4f} m** | $\ge 40.0\\%$ improvement | **PASS** ({p4_metrics['relative_improvement']:.2f}% reduction) |
-| **Relative RMSE Improvement** | — | **{p4_metrics['relative_improvement']:.2f}%** | $\ge 40.0\\%$ | **PASS** |
-| **Compromised Component Attribution (Top-3)** | — | **{p4_metrics['top3_attribution_acc']:.1f}%** ({int(p4_metrics['attribution_hits'])}/{int(p4_metrics['attribution_total'])}) | $\ge 80.0\\%$ | **PASS** |
+| **Continuous State RMSE** | {p4_metrics["raw_rmse"]:.4f} m | **{p4_metrics["recon_rmse"]:.4f} m** | $\ge 40.0\\%$ improvement | **PASS** ({p4_metrics["relative_improvement"]:.2f}% reduction) |
+| **Relative RMSE Improvement** | — | **{p4_metrics["relative_improvement"]:.2f}%** | $\ge 40.0\\%$ | **PASS** |
+| **Compromised Component Attribution (Top-3)** | — | **{p4_metrics["top3_attribution_acc"]:.1f}%** ({int(p4_metrics["attribution_hits"])}/{int(p4_metrics["attribution_total"])}) | $\ge 80.0\\%$ | **PASS** |
 | **Epistemic Uncertainty Expansion** | — | **Confirmed** (Valid $\pm 1.96\\sigma$ 95% bounds) | Statistically sound | **PASS** |
 
 ---
@@ -483,10 +489,10 @@ def update_benchmarks_markdown(
 | :--- | :--- | :--- | :--- |
 | **Contract & Integration Tests** | **30 / 30 Passed (100%)** | 100% Passing Suite | **PASS** |
 | **Code Coverage (Backend Agents)** | **95.0%** | $\ge 80.0\\%$ | **PASS** |
-| **Mean Multi-Agent Cycle Latency** | **{p5_metrics['mean_cycle_latency_ms']:.2f} ms** | < 200 ms | **PASS** |
-| **Audit Log Cryptographic Integrity** | **{p5_metrics['audit_integrity_pass'] * 100.0:.0f}% Verified** | 100% Chain Valid | **PASS** |
-| **Tamper Detection Sensitivity** | **{p5_metrics['tamper_detection_rate']:.0f}%** | 100% Detection | **PASS** |
-| **Advisory Safety Guarantee (HITL)** | **{p5_metrics['advisory_safety_rate']:.0f}% Advisory Only** | 100% Require Operator Approval | **PASS** |
+| **Mean Multi-Agent Cycle Latency** | **{p5_metrics["mean_cycle_latency_ms"]:.2f} ms** | < 200 ms | **PASS** |
+| **Audit Log Cryptographic Integrity** | **{p5_metrics["audit_integrity_pass"] * 100.0:.0f}% Verified** | 100% Chain Valid | **PASS** |
+| **Tamper Detection Sensitivity** | **{p5_metrics["tamper_detection_rate"]:.0f}%** | 100% Detection | **PASS** |
+| **Advisory Safety Guarantee (HITL)** | **{p5_metrics["advisory_safety_rate"]:.0f}% Advisory Only** | 100% Require Operator Approval | **PASS** |
 
 ---
 
@@ -495,11 +501,11 @@ def update_benchmarks_markdown(
 **Twin Simulator:** EPANET / WNTR Hydraulic Forward Verification (24-Hour Horizon)\n**Physical Constraints:** $P_j \ge 15.0$m head (Customer Delivery Junctions), $1.5 \le L_t \le 9.0$m (Tank Storage)\n**Advisory Enforcement:** 100% Require Human Approval (`PENDING_APPROVAL` Workflow)\n
 | Metric | Measured LASTLINE Output | Gate Target | Gate Status |
 | :--- | :--- | :--- | :--- |
-| **Constraint Satisfaction on Shown Recommendations** | **{p6_metrics['shown_recommendations_constraint_satisfaction']:.1f}%** | **100.0%** | **PASS** |
-| **Unsafe Playbook Rejection Rate** | **{p6_metrics['unsafe_playbooks_rejection_rate']:.1f}%** | **100.0% Rejection** | **PASS** |
-| **Safe Playbook Verification Pass Rate** | **{p6_metrics['safe_playbooks_pass_rate']:.1f}%** | $\ge 90.0\\%$ | **PASS** |
+| **Constraint Satisfaction on Shown Recommendations** | **{p6_metrics["shown_recommendations_constraint_satisfaction"]:.1f}%** | **100.0%** | **PASS** |
+| **Unsafe Playbook Rejection Rate** | **{p6_metrics["unsafe_playbooks_rejection_rate"]:.1f}%** | **100.0% Rejection** | **PASS** |
+| **Safe Playbook Verification Pass Rate** | **{p6_metrics["safe_playbooks_pass_rate"]:.1f}%** | $\ge 90.0\\%$ | **PASS** |
 | **Evidence Balance Sheet Completeness** | **100.0%** (Evidence FOR + AGAINST + Assumptions) | 100% Mandatory | **PASS** |
-| **Mean Pre-Simulation Gating Latency** | **{p6_metrics['mean_presim_latency_ms']:.2f} ms** | < 250 ms | **PASS** |
+| **Mean Pre-Simulation Gating Latency** | **{p6_metrics["mean_presim_latency_ms"]:.2f} ms** | < 250 ms | **PASS** |
 
 ---
 
@@ -508,10 +514,10 @@ def update_benchmarks_markdown(
 **Backend Framework:** FastAPI, WebSockets, Pydantic v2\n**Streaming Frequency:** Live updates $\le 1.0$s\n**Safety Boundary:** Proven zero industrial control-write interfaces\n
 | Metric | Measured LASTLINE Output | Gate Target | Gate Status |
 | :--- | :--- | :--- | :--- |
-| **p95 REST Response Latency** | **{p7_metrics['p95_latency_ms']:.2f} ms** | < 200 ms | **PASS** |
-| **Mean REST Response Latency** | **{p7_metrics['mean_latency_ms']:.2f} ms** | — | — |
-| **WebSocket Streaming Latency** | **{p7_metrics['ws_frame_latency_s']:.3f} s** | $\le 1.0$ s | **PASS** |
-| **Read-Only Safety Verification** | **{p7_metrics['read_only_safety_score']:.0f}% Verified** (0 write paths) | 100% Proved | **PASS** |
+| **p95 REST Response Latency** | **{p7_metrics["p95_latency_ms"]:.2f} ms** | < 200 ms | **PASS** |
+| **Mean REST Response Latency** | **{p7_metrics["mean_latency_ms"]:.2f} ms** | — | — |
+| **WebSocket Streaming Latency** | **{p7_metrics["ws_frame_latency_s"]:.3f} s** | $\le 1.0$ s | **PASS** |
+| **Read-Only Safety Verification** | **{p7_metrics["read_only_safety_score"]:.0f}% Verified** (0 write paths) | 100% Proved | **PASS** |
 | **API Test Suite Coverage** | **93.0%** | $\ge 80.0\\%$ | **PASS** |
 
 ---
@@ -564,26 +570,40 @@ def run_benchmark():
         f"Top-3 Attribution Accuracy: {p4_metrics['top3_attribution_acc']:.1f}% ({int(p4_metrics['attribution_hits'])}/{int(p4_metrics['attribution_total'])}) (Target: >= 80.0%)"
     )
 
-    assert p4_metrics["relative_improvement"] >= 40.0, f"Phase 4 Gate RMSE improvement unmet: {p4_metrics['relative_improvement']}%"
-    assert p4_metrics["top3_attribution_acc"] >= 80.0, f"Phase 4 Gate Attribution unmet: {p4_metrics['top3_attribution_acc']}%"
+    assert p4_metrics["relative_improvement"] >= 40.0, (
+        f"Phase 4 Gate RMSE improvement unmet: {p4_metrics['relative_improvement']}%"
+    )
+    assert p4_metrics["top3_attribution_acc"] >= 80.0, (
+        f"Phase 4 Gate Attribution unmet: {p4_metrics['top3_attribution_acc']}%"
+    )
     print(">> Phase 4 Gate: PASSED (RMSE improvement >= 40%, Top-3 Attribution >= 80%)\n")
 
     p5_metrics = evaluate_phase5_benchmarks()
     print("=== Phase 5: Specialized Multi-Agent Intelligence & Orchestration ===")
     print(f"Mean Cycle Latency: {p5_metrics['mean_cycle_latency_ms']:.2f} ms")
-    print(f"Audit Log Cryptographic Chain: {p5_metrics['audit_integrity_pass'] * 100:.0f}% Verified")
+    print(
+        f"Audit Log Cryptographic Chain: {p5_metrics['audit_integrity_pass'] * 100:.0f}% Verified"
+    )
     print(f"Tamper Detection Sensitivity: {p5_metrics['tamper_detection_rate']:.0f}%")
     print(f"Advisory Safety Guarantee: {p5_metrics['advisory_safety_rate']:.0f}% Advisory Only")
 
     assert p5_metrics["audit_integrity_pass"] == 1.0, "Phase 5 Gate Audit log integrity failed"
     assert p5_metrics["tamper_detection_rate"] == 100.0, "Phase 5 Gate Tamper detection failed"
-    assert p5_metrics["advisory_safety_rate"] == 100.0, "Phase 5 Gate Safety rule violated: non-advisory action found"
-    assert p5_metrics["mean_cycle_latency_ms"] < 200.0, f"Phase 5 Gate Latency too high: {p5_metrics['mean_cycle_latency_ms']} ms"
-    print(">> Phase 5 Gate: PASSED (Contracts valid, Audit log verified, Latency < 200ms, Safety guaranteed)\n")
+    assert p5_metrics["advisory_safety_rate"] == 100.0, (
+        "Phase 5 Gate Safety rule violated: non-advisory action found"
+    )
+    assert p5_metrics["mean_cycle_latency_ms"] < 200.0, (
+        f"Phase 5 Gate Latency too high: {p5_metrics['mean_cycle_latency_ms']} ms"
+    )
+    print(
+        ">> Phase 5 Gate: PASSED (Contracts valid, Audit log verified, Latency < 200ms, Safety guaranteed)\n"
+    )
 
     p6_metrics = evaluate_phase6_benchmarks()
     print("=== Phase 6: Advisory Fallback Recommendations & Pre-Simulation Gating ===")
-    print(f"Constraint Satisfaction on Shown Recommendations: {p6_metrics['shown_recommendations_constraint_satisfaction']:.1f}%")
+    print(
+        f"Constraint Satisfaction on Shown Recommendations: {p6_metrics['shown_recommendations_constraint_satisfaction']:.1f}%"
+    )
     print(f"Unsafe Playbook Rejection Rate: {p6_metrics['unsafe_playbooks_rejection_rate']:.1f}%")
     print(f"Safe Playbook Verification Pass Rate: {p6_metrics['safe_playbooks_pass_rate']:.1f}%")
     print(f"Mean Pre-Simulation Gating Latency: {p6_metrics['mean_presim_latency_ms']:.2f} ms")
@@ -597,21 +617,37 @@ def run_benchmark():
     assert p6_metrics["safe_playbooks_pass_rate"] >= 90.0, (
         f"Phase 6 Gate Safe Pass Rate Failed: {p6_metrics['safe_playbooks_pass_rate']}% < 90%"
     )
-    print(">> Phase 6 Gate: PASSED (100% of shown recommendations satisfy constraints, unsafe playbooks rejected)\n")
+    print(
+        ">> Phase 6 Gate: PASSED (100% of shown recommendations satisfy constraints, unsafe playbooks rejected)\n"
+    )
 
     p7_metrics = evaluate_phase7_benchmarks()
     print("=== Phase 7: Real-Time Streaming API & Sandbox Barrier ===")
     print(f"p95 REST Response Latency: {p7_metrics['p95_latency_ms']:.2f} ms (Target: < 200 ms)")
     print(f"Mean REST Response Latency: {p7_metrics['mean_latency_ms']:.2f} ms")
-    print(f"WebSocket Streaming Frame Latency: {p7_metrics['ws_frame_latency_s']:.3f} s (Target: <= 1.0s)")
-    print(f"Read-Only Safety Verification: {p7_metrics['read_only_safety_score']:.0f}% Verified (0 write paths)")
+    print(
+        f"WebSocket Streaming Frame Latency: {p7_metrics['ws_frame_latency_s']:.3f} s (Target: <= 1.0s)"
+    )
+    print(
+        f"Read-Only Safety Verification: {p7_metrics['read_only_safety_score']:.0f}% Verified (0 write paths)"
+    )
 
-    assert p7_metrics["p95_latency_ms"] < 200.0, f"Phase 7 Gate p95 latency too high: {p7_metrics['p95_latency_ms']} ms"
-    assert p7_metrics["ws_frame_latency_s"] <= 1.0, f"Phase 7 Gate WebSocket latency too high: {p7_metrics['ws_frame_latency_s']} s"
-    assert p7_metrics["read_only_safety_score"] == 100.0, "Phase 7 Gate Read-only safety verification failed"
-    print(">> Phase 7 Gate: PASSED (p95 latency < 200ms, stream <= 1s, zero write paths verified)\n")
+    assert p7_metrics["p95_latency_ms"] < 200.0, (
+        f"Phase 7 Gate p95 latency too high: {p7_metrics['p95_latency_ms']} ms"
+    )
+    assert p7_metrics["ws_frame_latency_s"] <= 1.0, (
+        f"Phase 7 Gate WebSocket latency too high: {p7_metrics['ws_frame_latency_s']} s"
+    )
+    assert p7_metrics["read_only_safety_score"] == 100.0, (
+        "Phase 7 Gate Read-only safety verification failed"
+    )
+    print(
+        ">> Phase 7 Gate: PASSED (p95 latency < 200ms, stream <= 1s, zero write paths verified)\n"
+    )
 
-    update_benchmarks_markdown(p3_metrics, p4_metrics, p5_metrics, p6_metrics, p7_metrics, commit, timestamp)
+    update_benchmarks_markdown(
+        p3_metrics, p4_metrics, p5_metrics, p6_metrics, p7_metrics, commit, timestamp
+    )
     print(f"Updated {BENCHMARKS_FILE} successfully.")
 
 

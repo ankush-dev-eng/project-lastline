@@ -106,9 +106,7 @@ class TwinPlaybookSimulator:
         if suction_juncs:
             min_suct = float(results.node["pressure"].loc[:, suction_juncs].min().min())
             if min_suct <= 0.0:
-                violations.append(
-                    f"Suction node cavitated with negative pressure {min_suct:.2f}m."
-                )
+                violations.append(f"Suction node cavitated with negative pressure {min_suct:.2f}m.")
 
         # 2. Tank Storage Level Envelope constraints (1.5m <= L <= 9.0m)
         tank_names = list(wn.tank_name_list)

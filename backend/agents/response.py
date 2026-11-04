@@ -35,7 +35,8 @@ class ResponseAgent:
 
         # Rule 1: PRV or Zone B deficit
         if any("PRV" in s or "V1" in s or "J5" in s for s in suspicious_ids) or (
-            top_zone == "Zone_B_Central" and impact_report.pressure_deficits_m.get("Zone_B_Central", 0.0) > 0.0
+            top_zone == "Zone_B_Central"
+            and impact_report.pressure_deficits_m.get("Zone_B_Central", 0.0) > 0.0
         ):
             playbook_id = "PB_ZONE_B_EMERGENCY_FEED"
             actions.append(
@@ -66,7 +67,10 @@ class ResponseAgent:
             )
 
         # Rule 2: Booster Pump P1 or Zone A deficit
-        elif any("P1" in s or "P2" in s or "J1" in s or "T1" in s for s in suspicious_ids) or top_zone == "Zone_A_North":
+        elif (
+            any("P1" in s or "P2" in s or "J1" in s or "T1" in s for s in suspicious_ids)
+            or top_zone == "Zone_A_North"
+        ):
             playbook_id = "PB_ZONE_A_AUX_BOOSTER_SWAP"
             actions.append(
                 PlaybookAction(
@@ -91,7 +95,9 @@ class ResponseAgent:
                     is_advisory=True,
                     simulated_in_twin=True,
                     expected_pressure_gain_m=2.0,
-                    risk_tradeoffs=["Preserves 8 hours additional reserve for high-elevation hospital zone"],
+                    risk_tradeoffs=[
+                        "Preserves 8 hours additional reserve for high-elevation hospital zone"
+                    ],
                 )
             )
 
@@ -108,7 +114,9 @@ class ResponseAgent:
                     is_advisory=True,
                     simulated_in_twin=True,
                     expected_pressure_gain_m=3.5,
-                    risk_tradeoffs=["Non-critical commercial users may experience 10% lower peak pressure"],
+                    risk_tradeoffs=[
+                        "Non-critical commercial users may experience 10% lower peak pressure"
+                    ],
                 )
             )
 
@@ -125,7 +133,9 @@ class ResponseAgent:
                     is_advisory=True,
                     simulated_in_twin=True,
                     expected_pressure_gain_m=0.0,
-                    risk_tradeoffs=["Ignores potentially spoofed PLC telemetry until field audit clears PLCs"],
+                    risk_tradeoffs=[
+                        "Ignores potentially spoofed PLC telemetry until field audit clears PLCs"
+                    ],
                 )
             )
 

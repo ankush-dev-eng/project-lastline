@@ -44,7 +44,7 @@ class SentinelAgent:
             if not is_authorized or (is_foreign_ip and is_write_cmd):
                 severity = SeverityLevel.CRITICAL if is_write_cmd else SeverityLevel.HIGH
                 alert = CyberAlert(
-                    alert_id=f"CYB-ALT-{idx+1:03d}",
+                    alert_id=f"CYB-ALT-{idx + 1:03d}",
                     plc_id=plc_id,
                     severity=severity,
                     indicator="UNAUTHORIZED_PLC_WRITE_ATTEMPT",
@@ -57,7 +57,7 @@ class SentinelAgent:
 
             elif is_foreign_ip:
                 alert = CyberAlert(
-                    alert_id=f"CYB-ALT-{idx+1:03d}",
+                    alert_id=f"CYB-ALT-{idx + 1:03d}",
                     plc_id=plc_id,
                     severity=SeverityLevel.MEDIUM,
                     indicator="UNAUTHORIZED_SUBNET_PROBE",

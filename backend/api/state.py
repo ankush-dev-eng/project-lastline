@@ -63,7 +63,9 @@ class SystemState:
         )
 
         self.replay = ReplayController(scenario_id="SCENARIO_01_SENSOR_BIAS")
-        self.active_scenario: ScenarioResult = self.registry.generate_scenario("SCENARIO_01_SENSOR_BIAS")
+        self.active_scenario: ScenarioResult = self.registry.generate_scenario(
+            "SCENARIO_01_SENSOR_BIAS"
+        )
         self.cached_recs: list[VerifiedRecommendation] = []
         self.approval_records: dict[str, dict[str, Any]] = {}
 
@@ -86,7 +88,9 @@ class SystemState:
 
         # Fetch/update recommendations if alarm active
         if not self.cached_recs:
-            top_zone = res.impact.zone_priorities[0] if res.impact.zone_priorities else "Zone_B_Central"
+            top_zone = (
+                res.impact.zone_priorities[0] if res.impact.zone_priorities else "Zone_B_Central"
+            )
             self.cached_recs = self.rec_engine.generate_recommendations(
                 telemetry=sub_telemetry,
                 affected_zone=top_zone,

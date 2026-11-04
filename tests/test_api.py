@@ -122,7 +122,9 @@ def test_playbooks_recommendations_and_hitl_workflow(client):
     assert act_res.status_code == 200
     act_data = act_res.json()
     assert act_data["approval_status"] == "APPROVED"
-    assert act_data["executed_physical_command"] is False, "Hard safety rule: must NEVER execute physical control"
+    assert act_data["executed_physical_command"] is False, (
+        "Hard safety rule: must NEVER execute physical control"
+    )
     assert "ADVISORY" in act_data["notice"]
 
 
@@ -208,7 +210,9 @@ def test_p95_latency_under_200ms(client):
     p95_latency = float(sorted(latencies_ms)[int(len(latencies_ms) * 0.95)])
     mean_latency = float(sum(latencies_ms) / len(latencies_ms))
 
-    print(f"\n[API Benchmark] Mean: {mean_latency:.2f} ms | p95 Latency: {p95_latency:.2f} ms (Target: < 200 ms)")
+    print(
+        f"\n[API Benchmark] Mean: {mean_latency:.2f} ms | p95 Latency: {p95_latency:.2f} ms (Target: < 200 ms)"
+    )
     assert p95_latency < 200.0, f"Phase 7 Gate Failure: p95 latency {p95_latency:.2f} ms >= 200 ms"
 
 
@@ -232,15 +236,14 @@ def test_read_only_safety_boundary():
         "socket.send",
     ]
 
-    route_functions = [
-        obj for name, obj in inspect.getmembers(routes)
-        if inspect.isfunction(obj)
-    ]
+    route_functions = [obj for name, obj in inspect.getmembers(routes) if inspect.isfunction(obj)]
 
     for fn in route_functions:
         source = inspect.getsource(fn).lower()
         for term in forbidden_terms:
-            assert term not in source, f"CRITICAL SAFETY VIOLATION: Forbidden write term '{term}' in {fn.__name__}"
+            assert term not in source, (
+                f"CRITICAL SAFETY VIOLATION: Forbidden write term '{term}' in {fn.__name__}"
+            )
 
     # 2. Verify all API routes are tagged as advisory and cannot mutate physical plant
     for route in app.routes:
@@ -248,6 +251,9 @@ def test_read_only_safety_boundary():
             doc = inspect.getdoc(route.endpoint) or ""
             # Any POST endpoint must explicitly document its advisory/sandbox nature
             if "POST" in getattr(route, "methods", []):
-                assert ("advisory" in doc.lower() or "sandbox" in doc.lower() or "replay" in doc.lower() or "select" in doc.lower()), (
-                    f"Route {route.path} lacks explicit advisory sandbox documentation"
-                )
+                assert (
+                    "advisory" in doc.lower()
+                    or "sandbox" in doc.lower()
+                    or "replay" in doc.lower()
+                    or "select" in doc.lower()
+                ), f"Route {route.path} lacks explicit advisory sandbox documentation"

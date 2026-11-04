@@ -55,9 +55,7 @@ class IntegrityAgent:
 
         # Identify compromised sensors (trust score < 0.50)
         compromised = [
-            sensor_id
-            for sensor_id, trust_val in sensor_trust_latest.items()
-            if trust_val < 0.50
+            sensor_id for sensor_id, trust_val in sensor_trust_latest.items() if trust_val < 0.50
         ]
 
         system_alarm = bool(

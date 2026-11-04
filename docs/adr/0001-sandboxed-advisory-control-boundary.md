@@ -20,3 +20,4 @@ We enforce a **strict, non-negotiable architectural boundary**:
 - **Positive**: Eliminates the catastrophic risk of unauthorized or AI-hallucinated physical actuation of critical water infrastructure.
 - **Positive**: Complies with NIST SP 800-82 (Guide to Operational Technology Security) and ISA/IEC 62443 standards.
 - **Trade-off**: Requires human operator presence to manually execute verified fallback procedures on physical switchgear or approved SCADA consoles.
+

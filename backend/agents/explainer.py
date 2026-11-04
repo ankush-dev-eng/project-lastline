@@ -30,26 +30,32 @@ class ExplainerAgent:
         primary_fault = top_suspicious[0]["component_id"] if top_suspicious else "None"
         fault_conf = top_suspicious[0].get("confidence", 0.85) if top_suspicious else 0.50
 
-        top_zone = impact_report.zone_priorities[0] if impact_report.zone_priorities else "General Network"
+        top_zone = (
+            impact_report.zone_priorities[0] if impact_report.zone_priorities else "General Network"
+        )
         deficit = impact_report.pressure_deficits_m.get(top_zone, 0.0)
         action_count = len(response_report.recommended_actions)
 
         # 1. Evidence FOR the diagnosis and recommendation
         evidence_for: list[str] = [
-            f"Component '{primary_fault}' identified as primary anomaly source with {fault_conf*100:.1f}% confidence.",
+            f"Component '{primary_fault}' identified as primary anomaly source with {fault_conf * 100:.1f}% confidence.",
             f"Physical state reconstruction indicates a {deficit:.1f}m pressure deficit in {top_zone}.",
         ]
         if impact_report.critical_facilities_at_risk:
-            fac_names = ", ".join(f["facility_name"] for f in impact_report.critical_facilities_at_risk)
+            fac_names = ", ".join(
+                f["facility_name"] for f in impact_report.critical_facilities_at_risk
+            )
             evidence_for.append(f"Immediate risk identified for critical facilities: {fac_names}.")
 
         # 2. Evidence AGAINST / Key Uncertainties (honest counter-evidence)
         evidence_against: list[str] = [
-            f"Network state reconstructed under partial observability with system stability index at {recon_report.stability_index*100:.1f}%.",
+            f"Network state reconstructed under partial observability with system stability index at {recon_report.stability_index * 100:.1f}%.",
             "Uncertainty bands in adjacent unmonitored branch pipes remain unconstrained by direct telemetry.",
         ]
         if any(c.get("confidence", 0.0) < 0.70 for c in top_suspicious[:2]):
-            evidence_against.append("Secondary suspicious component attribution carries moderate ambiguity (<70% confidence).")
+            evidence_against.append(
+                "Secondary suspicious component attribution carries moderate ambiguity (<70% confidence)."
+            )
 
         # 3. Key Assumptions
         key_assumptions: list[str] = [

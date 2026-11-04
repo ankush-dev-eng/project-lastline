@@ -137,3 +137,4 @@ When operating in severely degraded environments, PROJECT LASTLINE adheres to th
 - [x] **Advisory Sandbox Invariant Verified**: $100\%$ of playbook recommendations require explicit human approval (`tests/test_playbook_simulation.py`).
 - [x] **EPANET Pre-Simulation Constraint Verified**: $100\%$ of shown playbooks enforce $P_j \ge 15.0\text{m}$ head (`tests/test_playbook_simulation.py`).
 - [x] **State Estimation Accuracy Under Attack**: $\ge 40\%$ RMSE improvement verified ($97.5\%$ achieved, `tests/test_state_reconstruction.py`).
+

@@ -55,7 +55,9 @@ class FallbackPlaybookCatalog:
                     ),
                 ],
                 expected_impact="Restores downstream pressure to 28-32m across Zone B commercial grid.",
-                tradeoffs=["Draws ~0.04 m3/s additional head from Zone C; monitored to prevent deficit."],
+                tradeoffs=[
+                    "Draws ~0.04 m3/s additional head from Zone C; monitored to prevent deficit."
+                ],
                 is_safe_baseline=True,
             ),
             FallbackPlaybook(
@@ -76,7 +78,9 @@ class FallbackPlaybookCatalog:
                     ),
                 ],
                 expected_impact="Supplies steady 75m discharge head to Zone A residential grid.",
-                tradeoffs=["Auxiliary pump operates at standard speed; electrical demand increases by 45 kW."],
+                tradeoffs=[
+                    "Auxiliary pump operates at standard speed; electrical demand increases by 45 kW."
+                ],
                 is_safe_baseline=True,
             ),
             FallbackPlaybook(
@@ -124,7 +128,9 @@ class FallbackPlaybookCatalog:
                     ),
                 ],
                 expected_impact="Maintains continuous positive head and prevents storage depletion.",
-                tradeoffs=["Pre-emptively locks storage reserve until field verification is completed."],
+                tradeoffs=[
+                    "Pre-emptively locks storage reserve until field verification is completed."
+                ],
                 is_safe_baseline=True,
             ),
             # Intentional UNSAFE test playbooks (must be rejected by simulator)

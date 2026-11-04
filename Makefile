@@ -30,3 +30,4 @@ benchmark:
 
 clean:
 	rm -rf .pytest_cache .ruff_cache htmlcov .coverage
+

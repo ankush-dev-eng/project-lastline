@@ -254,7 +254,9 @@ def test_response_agent_advisory_playbooks():
     impact_report = ImpactReport(
         overall_severity=SeverityLevel.HIGH,
         zone_priorities=["Zone_B_Central", "Zone_A_North", "Zone_C_Industrial"],
-        critical_facilities_at_risk=[{"facility_name": "Verdant Memorial Hospital", "zone": "Zone_B_Central"}],
+        critical_facilities_at_risk=[
+            {"facility_name": "Verdant Memorial Hospital", "zone": "Zone_B_Central"}
+        ],
         pressure_deficits_m={"Zone_B_Central": 6.5},
         tanks_time_to_empty_hours={"T1_Highlands": 14.2, "T2_Eastside": 18.0},
     )
@@ -345,9 +347,13 @@ def test_explainer_agent_evidence_linking():
         ],
     )
 
-    report: ExplainerReport = explainer.generate_explanation(recon_report, impact_report, response_report)
+    report: ExplainerReport = explainer.generate_explanation(
+        recon_report, impact_report, response_report
+    )
     assert report.evidence.evidence_for, "Must contain evidence FOR recommendation"
-    assert report.evidence.evidence_against, "Must honestly surface counter-evidence or uncertainties"
+    assert report.evidence.evidence_against, (
+        "Must honestly surface counter-evidence or uncertainties"
+    )
     assert report.evidence.key_assumptions, "Must explicitly list hydraulic assumptions"
     assert 0.0 <= report.confidence <= 1.0
     assert "ADVISORY" in report.summary or "SANDBOX" in report.summary

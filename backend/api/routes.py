@@ -43,23 +43,27 @@ def get_network_topology() -> dict[str, Any]:
     nodes = []
     for name, node in wn.nodes():
         coords = getattr(node, "coordinates", (0.0, 0.0))
-        nodes.append({
-            "id": name,
-            "type": node.node_type,
-            "elevation_m": getattr(node, "elevation", 0.0),
-            "coordinates": list(coords),
-        })
+        nodes.append(
+            {
+                "id": name,
+                "type": node.node_type,
+                "elevation_m": getattr(node, "elevation", 0.0),
+                "coordinates": list(coords),
+            }
+        )
 
     links = []
     for name, link in wn.links():
-        links.append({
-            "id": name,
-            "type": link.link_type,
-            "start_node": link.start_node_name,
-            "end_node": link.end_node_name,
-            "length_m": getattr(link, "length", 0.0),
-            "diameter_m": getattr(link, "diameter", 0.0),
-        })
+        links.append(
+            {
+                "id": name,
+                "type": link.link_type,
+                "start_node": link.start_node_name,
+                "end_node": link.end_node_name,
+                "length_m": getattr(link, "length", 0.0),
+                "diameter_m": getattr(link, "diameter", 0.0),
+            }
+        )
 
     zones = [
         {

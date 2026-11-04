@@ -122,3 +122,4 @@ export const ReplayControlBar: React.FC = () => {
     </div>
   );
 };
+
