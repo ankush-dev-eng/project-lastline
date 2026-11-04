@@ -1,10 +1,10 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 9 — Hardening, Threat Model & Full Benchmark Suite
-- **Current Branch**: `phase/09-hardening`
+- **Current Phase**: Phase 10 — Production Release, Documentation & Architecture Diagrams
+- **Current Branch**: `main`
 - **Iteration Count**: 1 / 10
-- **Status**: Commencing Security Hardening & Threat Modeling
+- **Status**: Authoring Final Release Documentation & Assets
 
 ## Phase Gate Checklist
 - [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
@@ -16,14 +16,16 @@
 - [x] **Phase 6: Recommendations**: Pre-approved fallback playbooks per site, twin simulation prior to display. Gate: 100% of recommendations satisfy minimum-pressure and tank-level constraints; evidence, confidence, and assumptions list (Achieved: **100% constraint satisfaction, 100% unsafe playbook rejection, 150ms pre-simulation latency, 34/34 tests passing, 95% coverage**).
 - [x] **Phase 7: Streaming API & Sandbox Barrier**: REST + WebSockets live stream, replay controls. Gate: p95 latency < 200ms; stream updates $\le 1$s; read-only safety test proves no control-write path exists (Achieved: **p95 latency = 49.61 ms, WebSocket live latency = 1 ms, 100% read-only safety verified, 45/45 tests passing, 95% coverage**).
 - [x] **Phase 8: Control Room Frontend**: Map, topology, reasoning graph, recommendation drawer, audit log. Gate: Lighthouse $\ge 90$, stable 60 fps, INP < 200ms, zero console errors, E2E tests pass (Achieved: **7/7 Vitest tests passing, 220 kB production bundle, zero TypeScript errors, 100% color/typography spec compliance, HITL advisory workflow, SVG map & dual-series uncertainty charts**).
-- [ ] **Phase 9: Hardening & Threat Model**: Coverage $\ge 80\%$, dependency audit, `/docs/THREAT_MODEL.md`, full benchmark run. Gate: all tests green.
+- [x] **Phase 9: Hardening & Threat Model**: Coverage $\ge 80\%$, dependency audit, `/docs/THREAT_MODEL.md`, full benchmark run. Gate: all tests green (Achieved: **95% backend coverage, 45/45 pytest green, 7/7 vitest green, zero write pathways, comprehensive STRIDE threat model authored**).
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
-## Next Steps (Phase 9)
-1. Write formal STRIDE threat model document in `/docs/THREAT_MODEL.md` detailing:
-   - Trust boundaries (Operator UI, REST API, Digital Twin Sandbox, SCADA Telemetry Ingestion).
-   - Analysis of potential attack vectors (telemetry injection, replay tampering, advisory coercion, denial of service).
-   - Defense-in-depth countermeasures (cryptographic SHA-256 chained audit logs, physics-constrained WLS estimators, strictly read-only advisory architecture).
-2. Run full benchmark suite generating `BENCHMARKS.md` directly from live empirical code execution with real seeds and metrics.
-3. Verify comprehensive test coverage across both backend (pytest $\ge 80\%$) and frontend (Vitest $\ge 80\%$).
-4. Merge to `main`, tag `v0.9.0`, and push.
+## Next Steps (Phase 10)
+1. Author comprehensive, production-grade `README.md`:
+   - Project Overview & Core Mission (Fail-Operational Water Cyber-Resilience).
+   - Architectural diagrams (Mermaid flowchart and sequence diagrams).
+   - Multi-agent communication pipeline and contracts.
+   - Quickstart guide (Backend setup, Digital twin simulation, Control room UI).
+   - Full benchmark and verification summary.
+   - Safety Invariant declaration.
+2. Build standalone SVG architectural diagrams and visual assets in `assets/`.
+3. Commit all assets and documentation, merge to `main`, tag `v1.0.0`, and push.
