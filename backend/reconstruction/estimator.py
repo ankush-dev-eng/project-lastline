@@ -5,6 +5,7 @@ guided by real-time telemetry trust weights and EPANET diurnal physical constrai
 """
 
 from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -73,7 +74,7 @@ class HydraulicStateEstimator:
 
             # Measurement noise variance
             meas_sigma = self.sensor_noise_stds[col]
-            meas_var = meas_sigma ** 2
+            meas_var = meas_sigma**2
 
             if meta.sensor_type in (SensorType.PUMP_STATUS, SensorType.VALVE_STATUS):
                 # Status flags: if trust is high (>0.5), use reported; else fallback to prior expected status

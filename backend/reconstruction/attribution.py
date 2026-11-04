@@ -5,6 +5,7 @@ based on telemetry trust collapse, reconstruction deviation, and physical topolo
 """
 
 from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -91,11 +92,13 @@ class ComponentAttributionEngine:
         results = []
         for comp_id, score in sorted_components[:top_k]:
             plc = self.sensors[comp_id].plc_id if comp_id in self.sensors else "PLANT_WIDE"
-            results.append({
-                "component_id": comp_id,
-                "plc_id": plc,
-                "suspicion_score": round(score, 2),
-                "evidence": evidence.get(comp_id, []),
-            })
+            results.append(
+                {
+                    "component_id": comp_id,
+                    "plc_id": plc,
+                    "suspicion_score": round(score, 2),
+                    "evidence": evidence.get(comp_id, []),
+                }
+            )
 
         return results

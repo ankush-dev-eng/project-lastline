@@ -32,6 +32,10 @@ htmlcov/
 .nox/
 .hypothesis/
 coverage.xml
+temp.*
+*.bin
+*.inp
+*.rpt
 
 # Linters & Formatters
 .ruff_cache/
