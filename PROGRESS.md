@@ -1,10 +1,10 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 3 — Detection & Telemetry Trust Scoring
-- **Current Branch**: `phase/03-detection`
+- **Current Phase**: Phase 4 — Physical State Reconstruction
+- **Current Branch**: `phase/04-state-reconstruction`
 - **Iteration Count**: 1 / 10
-- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.3.0`)
+- **Status**: Planning & Acceptance Test Authoring
 
 ## Phase Gate Checklist
 - [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
@@ -20,7 +20,15 @@
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
 ## Next Steps
-1. Push branch `phase/03-detection` to GitHub.
-2. Merge `phase/03-detection` into `main`, tag `v0.3.0`, and push tags.
-3. Switch to `phase/04-state-reconstruction`.
-4. Plan acceptance tests for Phase 4: State reconstruction (RMSE $\ge 40\%$ lower than raw-telemetry baseline under attack; top-3 compromised component attribution accuracy $\ge 80\%$).
+1. Write acceptance tests (`tests/test_state_reconstruction.py`) enforcing:
+   - State reconstruction RMSE $\ge 40\%$ lower than raw-telemetry baseline under attack.
+   - Compromised-component attribution top-3 accuracy $\ge 80\%$.
+   - Uncertainty estimates ($95\%$ confidence bounds $\hat{x}_i \pm 1.96 \sigma_i$).
+2. Implement `backend/reconstruction/estimator.py`:
+   - Weighted Least Squares (WLS) state estimator weighting measurements by real-time trust scores $w_i = T_i(t)$.
+   - Incorporates hydraulic constraints (mass continuity at junctions and tanks).
+   - Solves for true nodal pressures and flows using trusted physical anchors.
+   - Computes posterior covariance matrix for uncertainty quantification.
+3. Implement `backend/reconstruction/attribution.py`:
+   - Ranks suspicious components based on anomaly residuals and trust degradation.
+4. Verify gate benchmarks, merge to `main`, and tag `v0.4.0`.
