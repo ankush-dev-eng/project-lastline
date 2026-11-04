@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,400..800;1,400..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #14181B;
+  --color-basalt: #1D2327;
+  --color-bone: #F2EFE8;
+  --color-stone: #D9D4C7;
+  --color-sage: #6F8F7B;
+  --color-moss: #4F7A5A;
+  --color-brass: #C79A3B;
+  --color-copper: #B5693E;
+  --color-brick: #A8403A;
+
+  --bg-primary: #F2EFE8;
+  --bg-surface: #FFFFFF;
+  --bg-sidebar: #E8E4DA;
+  --text-primary: #14181B;
+  --text-muted: #576067;
+  --border-color: #D9D4C7;
+}
+
+.dark {
+  --bg-primary: #14181B;
+  --bg-surface: #1D2327;
+  --bg-sidebar: #171C20;
+  --text-primary: #F2EFE8;
+  --text-muted: #9BA3A9;
+  --border-color: #2D363D;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-telemetry {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
