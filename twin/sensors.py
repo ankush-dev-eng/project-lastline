@@ -4,6 +4,7 @@ Defines sensor types, measurement units, and PLC mapping for operational technol
 """
 
 from enum import Enum
+
 from pydantic import BaseModel, Field
 
 
@@ -18,6 +19,7 @@ class SensorType(str, Enum):
 
 class SensorMetadata(BaseModel):
     """Metadata for an instrumented physical sensor deployed in the water network."""
+
     sensor_id: str
     sensor_type: SensorType
     element_id: str
@@ -26,5 +28,7 @@ class SensorMetadata(BaseModel):
     min_normal: float
     max_normal: float
     noise_std: float = 0.01  # Gaussian measurement noise std relative to scale
-    criticality: str = Field(default="medium", description="criticality rating: low, medium, high, critical")
+    criticality: str = Field(
+        default="medium", description="criticality rating: low, medium, high, critical"
+    )
     zone_id: str | None = None

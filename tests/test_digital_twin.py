@@ -115,7 +115,9 @@ def test_diurnal_demand_pattern_dynamics(twin_fixture):
     total_demand = results.node["demand"][twin_fixture.model.junction_name_list].sum(axis=1)
     max_demand = total_demand.max()
     min_demand = total_demand.min()
-    assert max_demand > 1.3 * min_demand, "Diurnal demand curve must exhibit at least 30% dynamic range"
+    assert max_demand > 1.3 * min_demand, (
+        "Diurnal demand curve must exhibit at least 30% dynamic range"
+    )
 
 
 def test_telemetry_matrix_extraction(twin_fixture):
