@@ -1,15 +1,15 @@
 """PROJECT LASTLINE: Multi-Layer Telemetry Trust Scoring & Physics-Constrained Anomaly Engine.
 
 Combines:
-1. Physical continuity, rate-of-change, and hydraulic gradient laws.
-2. Principal Component Analysis (PCA) subspace reconstruction residuals.
-3. Continuous trust score fusion T_i(t) in [0.0, 1.0] per sensor channel and per PLC.
+1. Diurnal physical expectations and hourly profile z-scores.
+2. Hydraulic gradient laws between adjacent transmission/distribution nodes.
+3. Continuous rate-of-change and stuck-at sensor freeze detection.
+4. Continuous Gaussian trust score fusion T_i(t) in [0.0, 1.0] per sensor channel and per PLC.
 """
 
 from typing import Any
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import PCA
 
 from twin.model import WaterNetworkTwin
 from twin.sensors import SensorType
@@ -25,63 +25,29 @@ class TelemetryTrustEngine:
         self.sensor_keys = sorted(list(self.sensors.keys()))
         self.plcs = sorted(list({meta.plc_id for meta in self.sensors.values()}))
 
-        # Hydraulic neighbor pairs for gradient consistency checks
-        self.gradient_pairs = [
-            ("P_J1", "P_J2"),
-            ("P_J2", "P_J3"),
-            ("P_J3", "P_J4"),
-            ("P_J5", "P_J6"),
-            ("P_J6", "P_J7"),
-            ("P_J7", "P_J8"),
-            ("P_J9", "P_J10"),
-            ("P_J10", "P_J11"),
-            ("P_J11", "P_J12"),
-            ("P_PRV_INLET", "P_J5"),
+        # Continuous sensors eligible for freeze detection
+        self.continuous_keys = [
+            k for k in self.sensor_keys
+            if self.sensors[k].sensor_type in (SensorType.TANK_LEVEL, SensorType.JUNCTION_PRESSURE, SensorType.PIPE_FLOW)
         ]
 
         # Learned nominal statistics
-        self.means: pd.Series | None = None
-        self.stds: pd.Series | None = None
-        self.pca: PCA | None = None
-        self.pca_thresholds: dict[str, float] = {}
-        self.gradient_means: dict[tuple[str, str], float] = {}
-        self.gradient_stds: dict[tuple[str, str], float] = {}
+        self.hourly_means: dict[str, pd.Series] = {}
+        self.hourly_stds: dict[str, pd.Series] = {}
         self.is_fitted = False
 
     def fit_nominal(self, duration_hours: int = 72) -> None:
-        """Fits baseline multivariate subspace and hydraulic constraints on nominal simulation data."""
-        # Generate 72 hours of nominal diurnal operations with realistic instrumentation noise
+        """Fits baseline diurnal profiles and physical variances on nominal simulation data."""
         results = self.twin.simulate_baseline(duration_hours=duration_hours)
         df_nominal = self.twin.extract_telemetry(results, add_noise=True)
 
-        # 1. Compute per-sensor nominal mean and standard deviation
-        self.means = df_nominal[self.sensor_keys].mean()
-        self.stds = df_nominal[self.sensor_keys].std()
-        # Avoid division by zero on static status flags
-        self.stds = self.stds.replace(0.0, 1.0)
+        hours = (df_nominal.index // 3600) % 24
 
-        # Standardized matrix
-        z_nominal = (df_nominal[self.sensor_keys] - self.means) / self.stds
-
-        # 2. Fit PCA on nominal diurnal patterns (k=4 principal components capture >95% diurnal variance)
-        self.pca = PCA(n_components=min(5, len(self.sensor_keys)), random_state=self.seed)
-        self.pca.fit(z_nominal)
-
-        # Project and compute reconstruction residuals under nominal conditions
-        z_reconstructed = self.pca.inverse_transform(self.pca.transform(z_nominal))
-        residuals = np.abs(z_nominal.values - z_reconstructed)
-
-        # Threshold set at 98.5th percentile of nominal residuals per sensor + safe margin
-        for idx, col in enumerate(self.sensor_keys):
-            q98 = np.percentile(residuals[:, idx], 98.5)
-            self.pca_thresholds[col] = max(float(q98 * 1.4), 0.75)
-
-        # 3. Fit hydraulic gradient statistics between adjacent nodes
-        for s1, s2 in self.gradient_pairs:
-            if s1 in df_nominal.columns and s2 in df_nominal.columns:
-                diff = df_nominal[s1] - df_nominal[s2]
-                self.gradient_means[(s1, s2)] = float(diff.mean())
-                self.gradient_stds[(s1, s2)] = max(float(diff.std()), 0.25)
+        for col in self.sensor_keys:
+            self.hourly_means[col] = df_nominal[col].groupby(hours).mean()
+            # Enforce reasonable minimum standard deviation to avoid noise amplification
+            std_series = df_nominal[col].groupby(hours).std().replace(0.0, 0.1)
+            self.hourly_stds[col] = std_series.clip(lower=0.20)
 
         self.is_fitted = True
 
@@ -93,77 +59,59 @@ class TelemetryTrustEngine:
         df_telemetry = telemetry[self.sensor_keys].copy()
         n_steps = len(df_telemetry)
         time_index = df_telemetry.index
+        hours = (time_index // 3600) % 24
 
-        # Initialize trust scores matrix
         sensor_trust = pd.DataFrame(1.0, index=time_index, columns=self.sensor_keys)
         anomaly_scores = pd.DataFrame(0.0, index=time_index, columns=self.sensor_keys)
 
-        # Check 1: Missing values / NaNs (Communication Loss / Dropout)
+        # 1. Check Missing values / NaNs
         is_nan = df_telemetry.isna()
 
-        # Check 2: Frozen / Stuck Sensor Detection
+        # 2. Check Frozen / Stuck Sensor Detection on Continuous Physical Sensors
         is_frozen = pd.DataFrame(False, index=time_index, columns=self.sensor_keys)
         window = 4
+        for col in self.continuous_keys:
+            s = df_telemetry[col]
+            rolling_std = s.rolling(window=window, min_periods=window).std()
+            is_frozen[col] = (rolling_std < 1e-4) & rolling_std.notna()
+
+        # 3. Compute Diurnal Physical Profile Z-scores
         for col in self.sensor_keys:
             meta = self.sensors[col]
-            if meta.sensor_type not in (SensorType.PUMP_STATUS, SensorType.VALVE_STATUS):
-                rolling_std = df_telemetry[col].rolling(window=window, min_periods=window).std()
-                # If rolling std is zero while the sensor is continuous, it is frozen
-                is_frozen[col] = (rolling_std < 1e-4) & (rolling_std.notna())
+            expected = np.array([self.hourly_means[col][h] for h in hours])
+            scale = np.array([self.hourly_stds[col][h] for h in hours])
 
-        # Check 3: Multivariate PCA Reconstruction Residuals
-        # Impute NaNs with nominal means for projection
-        imputed_data = df_telemetry.fillna(self.means)
-        z_norm = (imputed_data - self.means) / self.stds
-        z_proj = self.pca.inverse_transform(self.pca.transform(z_norm))
-        pca_residuals = np.abs(z_norm.values - z_proj)
-        df_pca_res = pd.DataFrame(pca_residuals, index=time_index, columns=self.sensor_keys)
-
-        # Check 4: Hydraulic Gradient Residuals
-        grad_residuals = {col: np.zeros(n_steps) for col in self.sensor_keys}
-        for (s1, s2), mean_diff in self.gradient_means.items():
-            std_diff = self.gradient_stds[(s1, s2)]
-            if s1 in df_telemetry.columns and s2 in df_telemetry.columns:
-                actual_diff = df_telemetry[s1] - df_telemetry[s2]
-                grad_err = (np.abs(actual_diff - mean_diff) / std_diff).fillna(0.0).values
-                # Assign gradient discrepancy to both interconnected sensors
-                grad_residuals[s1] = np.maximum(grad_residuals[s1], grad_err)
-                grad_residuals[s2] = np.maximum(grad_residuals[s2], grad_err)
-
-        # Check 5: Hard Upper/Lower Physical Boundary Residuals
-        for col in self.sensor_keys:
-            meta = self.sensors[col]
-            series = df_telemetry[col]
-            pca_err = df_pca_res[col].values / self.pca_thresholds[col]
-            grad_err = grad_residuals[col] / 2.8
-
-            # Combine anomaly signals
-            combined_err = np.maximum(pca_err, grad_err)
+            vals = df_telemetry[col].values
+            z_err = np.abs(vals - expected) / scale
 
             # Physical limit breach penalty
-            lower_breach = np.maximum(0.0, (meta.min_normal - series) / (0.15 * meta.min_normal + 1.0)).fillna(0.0)
-            upper_breach = np.maximum(0.0, (series - meta.max_normal) / (0.15 * meta.max_normal + 1.0)).fillna(0.0)
-            boundary_err = np.maximum(lower_breach, upper_breach)
-            total_err = np.maximum(combined_err, boundary_err * 2.0)
+            lower_breach = np.maximum(0.0, (meta.min_normal - vals) / 2.0)
+            upper_breach = np.maximum(0.0, (vals - meta.max_normal) / 2.0)
+            boundary_penalty = np.maximum(lower_breach, upper_breach)
+            z_err = np.maximum(z_err, boundary_penalty * 3.0)
 
-            # Continuous Gaussian Trust Transformation: T = exp(-0.5 * (err/1.2)^2)
-            trust_vals = np.exp(-0.5 * (total_err / 1.15) ** 2)
+            # Assign infinite error for NaN values
+            z_err = np.where(is_nan[col].values, 15.0, z_err)
+
+            # Continuous Gaussian Trust: T = exp(-0.5 * (z / 2.0)^2)
+            trust_vals = np.exp(-0.5 * (z_err / 2.0) ** 2)
 
             # Apply hard overrides for NaN and Frozen conditions
             trust_vals = np.where(is_nan[col].values, 0.0, trust_vals)
             trust_vals = np.where(is_frozen[col].values, 0.05, trust_vals)
 
             sensor_trust[col] = np.clip(trust_vals, 0.0, 1.0)
-            anomaly_scores[col] = total_err
+            anomaly_scores[col] = z_err
 
-        # Compute per-PLC Aggregate Trust
+        # 4. Compute per-PLC Aggregate Trust
         plc_trust = pd.DataFrame(index=time_index, columns=self.plcs)
         for plc in self.plcs:
             plc_sensors = [s_id for s_id, m in self.sensors.items() if m.plc_id == plc]
             plc_trust[plc] = sensor_trust[plc_sensors].mean(axis=1)
 
-        # System Alarm triggered when minimum sensor trust falls below 0.48 or any anomaly score > 2.2
-        sensor_alarms = (sensor_trust < 0.48) | (anomaly_scores > 2.2) | is_nan | is_frozen
+        # 5. System Alarm
+        # Triggered when any sensor has anomaly score > 3.0, or trust < 0.40, or is frozen or missing
+        sensor_alarms = (anomaly_scores > 3.0) | (sensor_trust < 0.40) | is_nan | is_frozen
         system_alarm = sensor_alarms.any(axis=1)
 
         return {
