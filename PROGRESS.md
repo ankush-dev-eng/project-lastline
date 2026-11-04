@@ -1,10 +1,10 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 0 — Monorepo Scaffold & CI
-- **Current Branch**: `phase/00-scaffold`
+- **Current Phase**: Phase 1 — Digital Twin (EPANET + WNTR)
+- **Current Branch**: `phase/01-digital-twin`
 - **Iteration Count**: 1 / 10
-- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.0.0`)
+- **Status**: Planning & Acceptance Test Authoring
 
 ## Phase Gate Checklist
 - [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
@@ -20,8 +20,8 @@
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
 ## Next Steps
-1. Merge `phase/00-scaffold` into `main`, tag `v0.0.0`, push to GitHub.
-2. Create branch `phase/01-digital-twin`.
-3. Plan Phase 1 acceptance tests (EPANET hydraulic network simulation, diurnal demand patterns, sensors, pumps, valves, tanks).
-4. Implement digital twin simulation engine using WNTR + EPANET model.
-5. Verify baseline hydraulic conservation and test suite.
+1. Write Phase 1 acceptance tests (`tests/test_digital_twin.py`) testing EPANET network loading, hydraulic simulation, diurnal patterns, sensor placement, and mass conservation.
+2. Build network model generator (Richmond / C-Town or calibrated municipal benchmark model) with tanks, pumps, valves, junctions, and zones.
+3. Implement `twin/model.py` and `twin/simulator.py`.
+4. Verify baseline hydraulics: zero solver failures, mass conservation holds.
+5. Merge `phase/01-digital-twin` into `main`, tag `v0.1.0`.
