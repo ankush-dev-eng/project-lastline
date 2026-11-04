@@ -4,10 +4,10 @@
 - **Current Phase**: Phase 0 — Monorepo Scaffold & CI
 - **Current Branch**: `phase/00-scaffold`
 - **Iteration Count**: 1 / 10
-- **Status**: In Progress
+- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.0.0`)
 
 ## Phase Gate Checklist
-- [ ] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, pre-commit, Makefile. Gate: CI green.
+- [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
 - [ ] **Phase 1: Digital Twin**: EPANET water network with sensors, pumps, valves, tanks, zones; baseline simulation. Gate: reproducible baseline hydraulics, unit tests.
 - [ ] **Phase 2: Attack/Failure Injector**: Sensor spoofing, replay attacks, PLC setpoint tampering, communication loss, sensor dropout; $\ge 10$ labelled seeded scenarios + BATADAL ingestion. Gate: scenarios reproducible and labelled.
 - [ ] **Phase 3: Detection & Telemetry Trust Scoring**: Per sensor/PLC. Gate: $F_1 \ge 0.85$ and $\text{FPR} \le 5\%$ on held-out test scenarios; TTD better than threshold baseline.
@@ -20,9 +20,8 @@
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
 ## Next Steps
-1. Create directory structure and placeholder packages (`backend`, `frontend`, `twin`, `data`, `docs`, `benchmarks`, `assets`).
-2. Set up Python 3.12 virtualenv and backend dependencies (FastAPI, Pydantic, WNTR, scikit-learn, etc.).
-3. Set up Vite React frontend scaffold.
-4. Add GitHub Actions CI workflow and Makefile.
-5. Verify CI locally (tests, linters).
-6. Merge `phase/00-scaffold` into `main`, tag `v0.0.0`, push to GitHub.
+1. Merge `phase/00-scaffold` into `main`, tag `v0.0.0`, push to GitHub.
+2. Create branch `phase/01-digital-twin`.
+3. Plan Phase 1 acceptance tests (EPANET hydraulic network simulation, diurnal demand patterns, sensors, pumps, valves, tanks).
+4. Implement digital twin simulation engine using WNTR + EPANET model.
+5. Verify baseline hydraulic conservation and test suite.
