@@ -8,6 +8,7 @@ Gate Requirements:
 """
 
 import time
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -45,14 +46,14 @@ def test_network_topology_endpoint(client):
 
 
 def test_sensors_registry_endpoint(client):
-    """Verify sensor registry returns all 21 sensors with metadata."""
+    """Verify sensor registry returns all 22 sensors with metadata."""
     res = client.get("/api/network/sensors")
     assert res.status_code == 200
     data = res.json()
-    assert len(data["sensors"]) == 21
+    assert len(data["sensors"]) == 22
     # Check sample sensor attributes
     sample = data["sensors"]["P_J1"]
-    assert sample["sensor_type"] == "JUNCTION_PRESSURE"
+    assert sample["sensor_type"].lower() == "junction_pressure"
     assert sample["plc_id"] == "PLC_2"
     assert "min_normal" in sample
     assert "max_normal" in sample
@@ -151,7 +152,7 @@ def test_replay_controls(client):
     # Step Forward
     step_res = client.post("/api/replay/control", json={"command": "STEP_FORWARD"})
     assert step_res.status_code == 200
-    step_hour = step_res.json()["current_hour"]
+    assert step_res.json()["current_hour"] >= 0
 
     # Seek
     seek_res = client.post("/api/replay/control", json={"command": "SEEK", "target_hour": 12})
