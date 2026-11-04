@@ -178,6 +178,11 @@ def test_sentinel_agent_cyber_telemetry():
     assert "PLC_3" in report.flagged_plcs
     assert len(report.alerts) == 2
 
+    # Test empty cyber events
+    empty_report = sentinel.analyze([])
+    assert empty_report.cyber_threat_level == SeverityLevel.LOW
+    assert len(empty_report.alerts) == 0
+
 
 def test_integrity_agent_trust_scoring(agent_suite):
     """Verify Integrity Agent evaluates sensor trust and flags compromised instruments."""
@@ -263,9 +268,49 @@ def test_response_agent_advisory_playbooks():
 
     response_report: ResponseReport = response.determine_response(recon_report, impact_report)
     assert len(response_report.recommended_actions) >= 1
+    assert response_report.selected_playbook_id == "PB_ZONE_B_EMERGENCY_FEED"
     for act in response_report.recommended_actions:
         assert act.requires_human_approval is True
         assert act.is_advisory is True
+
+    # Test Zone A Booster swap
+    impact_a = ImpactReport(
+        overall_severity=SeverityLevel.HIGH,
+        zone_priorities=["Zone_A_North", "Zone_B_Central"],
+        pressure_deficits_m={"Zone_A_North": 7.0},
+    )
+    recon_a = ReconstructionReport(
+        stability_index=0.70,
+        top_suspicious_components=[{"component_id": "P1_MainBooster", "confidence": 0.90}],
+    )
+    resp_a = response.determine_response(recon_a, impact_a)
+    assert resp_a.selected_playbook_id == "PB_ZONE_A_AUX_BOOSTER_SWAP"
+
+    # Test Zone C Industrial stabilization
+    impact_c = ImpactReport(
+        overall_severity=SeverityLevel.HIGH,
+        zone_priorities=["Zone_C_Industrial"],
+        pressure_deficits_m={"Zone_C_Industrial": 4.5},
+    )
+    recon_c = ReconstructionReport(
+        stability_index=0.75,
+        top_suspicious_components=[{"component_id": "T2_Eastside", "confidence": 0.88}],
+    )
+    resp_c = response.determine_response(recon_c, impact_c)
+    assert resp_c.selected_playbook_id == "PB_ZONE_C_INDUSTRIAL_STABILIZATION"
+
+    # Test General fallback
+    impact_gen = ImpactReport(
+        overall_severity=SeverityLevel.LOW,
+        zone_priorities=[],
+        pressure_deficits_m={},
+    )
+    recon_gen = ReconstructionReport(
+        stability_index=0.98,
+        top_suspicious_components=[],
+    )
+    resp_gen = response.determine_response(recon_gen, impact_gen)
+    assert resp_gen.selected_playbook_id == "PB_SYSTEM_OBSERVABILITY_FALLBACK"
 
 
 def test_explainer_agent_evidence_linking():
