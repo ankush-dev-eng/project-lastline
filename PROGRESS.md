@@ -1,10 +1,10 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 2 — Attack & Failure Scenario Injector
-- **Current Branch**: `phase/02-attack-injector`
+- **Current Phase**: Phase 3 — Detection & Telemetry Trust Scoring
+- **Current Branch**: `phase/03-detection`
 - **Iteration Count**: 1 / 10
-- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.2.0`)
+- **Status**: Planning & Acceptance Test Authoring
 
 ## Phase Gate Checklist
 - [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
@@ -20,7 +20,20 @@
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
 ## Next Steps
-1. Push branch `phase/02-attack-injector` to GitHub.
-2. Merge `phase/02-attack-injector` into `main`, tag `v0.2.0`, and push tags.
-3. Switch to `phase/03-detection`.
-4. Plan acceptance tests for Phase 3: Anomaly detection & per-sensor trust scoring ($F_1 \ge 0.85$, $\text{FPR} \le 5\%$, TTD better than threshold baseline on held-out test scenarios).
+1. Write acceptance tests (`tests/test_detection.py`) enforcing:
+   - $F_1 \ge 0.85$ on held-out test set
+   - $\text{FPR} \le 5.0\%$ on held-out test set
+   - Time-to-Detect (TTD) strictly better than naive static-threshold baseline
+   - Continuous trust scores $T_i(t) \in [0.0, 1.0]$ per sensor channel and per PLC.
+2. Implement naive baseline detector in `backend/detection/baselines.py` (fixed upper/lower threshold alarms).
+3. Implement `backend/detection/trust_engine.py`:
+   - Physics-informed residual checks:
+     - Rate-of-change checks: $|\Delta x / \Delta t| > \text{threshold}$ (flags frozen or sudden jump values)
+     - Hydraulic head loss / spatial correlation: pressures at adjacent junctions (e.g. $P_{J1}$ and $P_{J2}$) must follow Hazen-Williams head loss monotonicity
+     - Mass balance continuity: tank level rate of change vs pump discharge
+   - Statistical / ML Anomaly Detection:
+     - ECOD / PCA / Isolation Forest ensemble on multivariable sensor correlations
+   - Trust Score Fusion:
+     - $T_i(t) = \exp(-\gamma \cdot \text{anomaly\_score}_i(t))$ bounded in $[0.0, 1.0]$
+     - PLC trust aggregated across its mapped sensors
+4. Verify gate benchmarks, merge to `main`, and tag `v0.3.0`.
