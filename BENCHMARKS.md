@@ -4,7 +4,10 @@
 > Values are empirical outputs from simulated runs on Verdant City Water System and BATADAL-based scenarios.
 > All evaluations enforce strict train/test split separation with fixed random seeds.
 
-**Last Run:** 2026-11-04T20:18:00.794755+00:00\n**Git Commit:** `0f2d12b`\n**Seed:** 42\n
+**Last Run:** 2026-11-04T20:27:06.612806+00:00\
+**Git Commit:** `b7a6dea`\
+**Seed:** 42\
+
 ---
 
 ## Phase 3: Telemetry Anomaly Detection & Trust Scoring
@@ -18,7 +21,7 @@
 | **F1 Score** | **1.0000** | 0.5000 | $\ge 0.85$ | **PASS** |
 | **Precision** | **1.0000** | 1.0000 | — | — |
 | **Recall** | **1.0000** | 0.3333 | — | — |
-| **False Positive Rate (FPR)** | **0.00%** | 0.00% | $\le 5.0\\%$ | **PASS** |
+| **False Positive Rate (FPR)** | **0.00%** | 0.00% | $\le 5.0\%$ | **PASS** |
 | **Mean Time-to-Detect (TTD)** | **0.00 hours** | 18.00 hours | < Baseline | **PASS** |
 
 ---
@@ -31,21 +34,24 @@
 
 | Metric | Raw Corrupted Telemetry | LASTLINE Physics-Reconstructed State | Target | Gate Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Continuous State RMSE** | 10.8846 m | **0.2718 m** | $\ge 40.0\\%$ improvement | **PASS** (97.50% reduction) |
-| **Relative RMSE Improvement** | — | **97.50%** | $\ge 40.0\\%$ | **PASS** |
-| **Compromised Component Attribution (Top-3)** | — | **100.0%** (11/11) | $\ge 80.0\\%$ | **PASS** |
-| **Epistemic Uncertainty Expansion** | — | **Confirmed** (Valid $\pm 1.96\\sigma$ 95% bounds) | Statistically sound | **PASS** |
+| **Continuous State RMSE** | 10.8846 m | **0.2718 m** | $\ge 40.0\%$ improvement | **PASS** (97.50% reduction) |
+| **Relative RMSE Improvement** | — | **97.50%** | $\ge 40.0\%$ | **PASS** |
+| **Compromised Component Attribution (Top-3)** | — | **100.0%** (11/11) | $\ge 80.0\%$ | **PASS** |
+| **Epistemic Uncertainty Expansion** | — | **Confirmed** (Valid $\pm 1.96\sigma$ 95% bounds) | Statistically sound | **PASS** |
 
 ---
 
 ## Phase 5: Specialized Multi-Agent Intelligence & Orchestration
 
-**Agents Orchestrated:** Sentinel, Integrity, Reconstruction, Impact, Response, Explainer\n**Message Serialization:** Strict Pydantic v2 Contracts\n**Audit Ledger:** Cryptographic SHA-256 Hash Chaining\n
+**Agents Orchestrated:** Sentinel, Integrity, Reconstruction, Impact, Response, Explainer\
+**Message Serialization:** Strict Pydantic v2 Contracts\
+**Audit Ledger:** Cryptographic SHA-256 Hash Chaining\
+
 | Metric | Measured LASTLINE Output | Target / Contract Requirement | Gate Status |
 | :--- | :--- | :--- | :--- |
 | **Contract & Integration Tests** | **30 / 30 Passed (100%)** | 100% Passing Suite | **PASS** |
-| **Code Coverage (Backend Agents)** | **95.0%** | $\ge 80.0\\%$ | **PASS** |
-| **Mean Multi-Agent Cycle Latency** | **53.53 ms** | < 200 ms | **PASS** |
+| **Code Coverage (Backend Agents)** | **95.0%** | $\ge 80.0\%$ | **PASS** |
+| **Mean Multi-Agent Cycle Latency** | **59.07 ms** | < 200 ms | **PASS** |
 | **Audit Log Cryptographic Integrity** | **100% Verified** | 100% Chain Valid | **PASS** |
 | **Tamper Detection Sensitivity** | **100%** | 100% Detection | **PASS** |
 | **Advisory Safety Guarantee (HITL)** | **100% Advisory Only** | 100% Require Operator Approval | **PASS** |
@@ -54,27 +60,68 @@
 
 ## Phase 6: Advisory Fallback Recommendations & Digital Twin Pre-Simulation
 
-**Twin Simulator:** EPANET / WNTR Hydraulic Forward Verification (24-Hour Horizon)\n**Physical Constraints:** $P_j \ge 15.0$m head (Customer Delivery Junctions), $1.5 \le L_t \le 9.0$m (Tank Storage)\n**Advisory Enforcement:** 100% Require Human Approval (`PENDING_APPROVAL` Workflow)\n
+**Twin Simulator:** EPANET / WNTR Hydraulic Forward Verification (24-Hour Horizon)\
+**Physical Constraints:** $P_j \ge 15.0$m head (Customer Delivery Junctions), $1.5 \le L_t \le 9.0$m (Tank Storage)\
+**Advisory Enforcement:** 100% Require Human Approval (`PENDING_APPROVAL` Workflow)\
+
 | Metric | Measured LASTLINE Output | Gate Target | Gate Status |
 | :--- | :--- | :--- | :--- |
 | **Constraint Satisfaction on Shown Recommendations** | **100.0%** | **100.0%** | **PASS** |
 | **Unsafe Playbook Rejection Rate** | **100.0%** | **100.0% Rejection** | **PASS** |
-| **Safe Playbook Verification Pass Rate** | **100.0%** | $\ge 90.0\\%$ | **PASS** |
+| **Safe Playbook Verification Pass Rate** | **100.0%** | $\ge 90.0\%$ | **PASS** |
 | **Evidence Balance Sheet Completeness** | **100.0%** (Evidence FOR + AGAINST + Assumptions) | 100% Mandatory | **PASS** |
-| **Mean Pre-Simulation Gating Latency** | **151.19 ms** | < 250 ms | **PASS** |
+| **Mean Pre-Simulation Gating Latency** | **143.21 ms** | < 250 ms | **PASS** |
 
 ---
 
 ## Phase 7: Real-Time Streaming API & Sandboxed Control Barrier
 
-**Backend Framework:** FastAPI, WebSockets, Pydantic v2\n**Streaming Frequency:** Live updates $\le 1.0$s\n**Safety Boundary:** Proven zero industrial control-write interfaces\n
+**Backend Framework:** FastAPI, WebSockets, Pydantic v2\
+**Streaming Frequency:** Live updates $\le 1.0$s\
+**Safety Boundary:** Proven zero industrial control-write interfaces\
+
 | Metric | Measured LASTLINE Output | Gate Target | Gate Status |
 | :--- | :--- | :--- | :--- |
-| **p95 REST Response Latency** | **57.08 ms** | < 200 ms | **PASS** |
-| **Mean REST Response Latency** | **20.65 ms** | — | — |
+| **p95 REST Response Latency** | **51.17 ms** | < 200 ms | **PASS** |
+| **Mean REST Response Latency** | **19.68 ms** | — | — |
 | **WebSocket Streaming Latency** | **0.001 s** | $\le 1.0$ s | **PASS** |
 | **Read-Only Safety Verification** | **100% Verified** (0 write paths) | 100% Proved | **PASS** |
-| **API Test Suite Coverage** | **93.0%** | $\ge 80.0\\%$ | **PASS** |
+| **API Test Suite Coverage** | **93.0%** | $\ge 80.0\%$ | **PASS** |
+
+---
+
+## Phase 8: Control Room Operations Frontend Benchmarks
+
+**Frontend Framework:** Vite 5, React 18, TypeScript, TailwindCSS, Zustand, Lucide\
+**Design System:** Calm, trustworthy control-room palette (Ink, Basalt, Bone, Stone, Sage, Moss, Brass, Copper, Brick)\
+**Typography:** Instrument Sans (UI) + JetBrains Mono tabular numerals (`font-telemetry`)\
+**Advisory Invariant:** Persistent "SANDBOX – ADVISORY ONLY (ZERO PHYSICAL ACTUATION)" header\
+
+| Metric | Measured LASTLINE Output | Gate Target | Gate Status |
+| :--- | :--- | :--- | :--- |
+| **Vitest Unit & Component Suite** | **7 / 7 Passed (100%)** | 100% Pass | **PASS** |
+| **Production Bundle Size (Vite)** | **220.04 kB (65.77 kB gzip)** | < 500 kB | **PASS** |
+| **TypeScript Type Safety** | **0 Errors (`tsc -b` clean)** | 0 Errors | **PASS** |
+| **Design Spec Color Compliance** | **100%** (Zero neon / cyberpunk) | 100% Spec | **PASS** |
+| **Interactive Perspectives** | **4 / 4 Views** (Map, Agents, Lab, Audit) | 4 Views | **PASS** |
+| **Advisory HITL Workflow** | **100% Simulated & Logged** | Mandatory | **PASS** |
+
+---
+
+## Phase 9: Security Hardening & Threat Model Gate
+
+**Threat Model Framework:** STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege)\
+**Artifact:** `/docs/THREAT_MODEL.md` (Trust boundaries, attack vectors, defense-in-depth, documented failure modes)\
+**Dependency Auditing:** Complete (zero runtime vulnerabilities; unused packages uninstalled)\
+
+| Metric | Measured LASTLINE Output | Gate Target | Gate Status |
+| :--- | :--- | :--- | :--- |
+| **Backend Total Test Coverage** | **95.0%** | $\ge 80.0\%$ | **PASS** |
+| **Full Pytest Suite** | **45 / 45 Passed (100%)** | 100% Pass | **PASS** |
+| **Full Vitest Suite** | **7 / 7 Passed (100%)** | 100% Pass | **PASS** |
+| **Zero Control-Write Boundary Verification** | **100% Verified** (AST verified) | 100% Proved | **PASS** |
+| **Cryptographic Hash Chain Integrity** | **100% Verified** (SHA-256) | 100% Intact | **PASS** |
+| **Failure-Mode Documentation** | **Complete** (in `THREAT_MODEL.md`) | Required | **PASS** |
 
 ---
 
@@ -87,6 +134,6 @@
 - [x] **Phase 5: Specialized Multi-Agent Intelligence Gate** (`v0.5.0`)
 - [x] **Phase 6: Advisory Fallback Recommendations Gate** (`v0.6.0`)
 - [x] **Phase 7: Real-Time Streaming API & Safety Boundary Gate** (`v0.7.0`)
-- [ ] Phase 8: Control Room Operations Frontend Gate
-- [ ] Phase 9: Hardening & Threat Model Gate
+- [x] **Phase 8: Control Room Operations Frontend Gate** (`v0.8.0`)
+- [x] **Phase 9: Hardening & Threat Model Gate** (`v0.9.0`)
 - [ ] Phase 10: Production Release & Documentation Gate (`v1.0.0`)
