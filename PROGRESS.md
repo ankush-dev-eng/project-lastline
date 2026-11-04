@@ -1,14 +1,14 @@
 # PROJECT LASTLINE: Progress & State Tracker
 
 ## Active Phase
-- **Current Phase**: Phase 0 — Monorepo Scaffold & CI
-- **Current Branch**: `phase/00-scaffold`
+- **Current Phase**: Phase 1 — Digital Twin (EPANET + WNTR)
+- **Current Branch**: `phase/01-digital-twin`
 - **Iteration Count**: 1 / 10
-- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.0.0`)
+- **Status**: Gate Passed (Ready to merge to `main` and tag `v0.1.0`)
 
 ## Phase Gate Checklist
 - [x] **Phase 0: Scaffold**: Monorepo (`/backend`, `/frontend`, `/twin`, `/data`, `/docs`, `/benchmarks`, `/assets`), CI, Makefile. Gate: CI green, 86% coverage, zero write endpoints verified.
-- [ ] **Phase 1: Digital Twin**: EPANET water network with sensors, pumps, valves, tanks, zones; baseline simulation. Gate: reproducible baseline hydraulics, unit tests.
+- [x] **Phase 1: Digital Twin**: EPANET water network with sensors, pumps, valves, tanks, zones; baseline simulation. Gate: reproducible baseline hydraulics, unit tests (97% coverage, 10/10 tests passing).
 - [ ] **Phase 2: Attack/Failure Injector**: Sensor spoofing, replay attacks, PLC setpoint tampering, communication loss, sensor dropout; $\ge 10$ labelled seeded scenarios + BATADAL ingestion. Gate: scenarios reproducible and labelled.
 - [ ] **Phase 3: Detection & Telemetry Trust Scoring**: Per sensor/PLC. Gate: $F_1 \ge 0.85$ and $\text{FPR} \le 5\%$ on held-out test scenarios; TTD better than threshold baseline.
 - [ ] **Phase 4: Physical State Reconstruction**: Trusted sensors + hydraulic constraints (WLS/Kalman/Bayesian fusion), uncertainty estimates. Gate: RMSE at least 40% lower than raw-telemetry baseline under attack; top-3 attribution accuracy $\ge 80\%$.
@@ -20,8 +20,7 @@
 - [ ] **Phase 10: Final Release & Assets**: Self-hosted SVG hero, animated tagline, architecture diagrams, `v1.0.0` tagged.
 
 ## Next Steps
-1. Merge `phase/00-scaffold` into `main`, tag `v0.0.0`, push to GitHub.
-2. Create branch `phase/01-digital-twin`.
-3. Plan Phase 1 acceptance tests (EPANET hydraulic network simulation, diurnal demand patterns, sensors, pumps, valves, tanks).
-4. Implement digital twin simulation engine using WNTR + EPANET model.
-5. Verify baseline hydraulic conservation and test suite.
+1. Push branch `phase/01-digital-twin` to GitHub.
+2. Merge `phase/01-digital-twin` into `main`, tag `v0.1.0`, and push tags.
+3. Switch to `phase/02-attack-injector`.
+4. Plan acceptance tests for Phase 2: $\ge 10$ seeded attack scenarios + BATADAL dataset ingestion.
