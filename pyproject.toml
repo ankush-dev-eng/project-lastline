@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-lastline"
+version = "0.0.1"
+description = "AI-Driven Cyber-Resilience and Fail-Operational Intelligence for Critical Water Infrastructure"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [
+    { name = "PROJECT LASTLINE Contributors" }
+]
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+    "websockets>=12.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "networkx>=3.2.0",
+    "scikit-learn>=1.4.0",
+    "pyod>=1.1.0",
+    "duckdb>=0.10.0",
+    "six>=1.16.0",
+    "setuptools",
+    "wntr>=1.1.0",
+    "numpy>=1.26.0,<2.0.0",
+    "scipy>=1.12.0",
+    "pandas>=2.2.0",
+    "httpx>=0.27.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "hypothesis>=6.98.0",
+    "ruff>=0.3.0",
+    "mypy>=1.9.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["backend*", "twin*", "data*", "benchmarks*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
