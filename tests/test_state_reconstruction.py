@@ -43,8 +43,11 @@ def test_state_reconstruction_rmse_improvement(reconstruction_suite):
         "SCENARIO_01_SENSOR_BIAS",
         "SCENARIO_02_TANK_LEVEL_DRIFT",
         "SCENARIO_03_TANK_LEVEL_FROZEN",
+        "SCENARIO_04_REPLAY_ATTACK",
+        "SCENARIO_06_COMMUNICATION_LOSS",
+        "SCENARIO_07_INTERMITTENT_DROPOUT",
         "SCENARIO_08_COORDINATED_FDIA",
-        "SCENARIO_10_VALVE_TAMPERING",
+        "SCENARIO_09_STEALTH_FALSE_DATA",
         "SCENARIO_11_MULTI_PLC_COORDINATED",
     ]
 
@@ -60,10 +63,7 @@ def test_state_reconstruction_rmse_improvement(reconstruction_suite):
         x_recon = recon_result["state_estimates"]
 
         # Only evaluate on attacked timesteps and continuous sensors
-        cont_cols = [
-            c for c in sc.telemetry.columns
-            if "P_" in c or "L_" in c or "F_" in c
-        ]
+        cont_cols = [c for c in sc.telemetry.columns if "P_" in c or "L_" in c or "F_" in c]
 
         y_raw = sc.telemetry.loc[attack_mask, cont_cols].fillna(0.0).values
         y_true = sc.ground_truth_physical.loc[attack_mask, cont_cols].values
@@ -76,7 +76,9 @@ def test_state_reconstruction_rmse_improvement(reconstruction_suite):
     recon_rmse = float(np.sqrt(np.mean(np.square(recon_errors))))
     relative_improvement = (1.0 - (recon_rmse / raw_rmse)) * 100.0
 
-    print(f"\n[Reconstruction Benchmark] Raw RMSE: {raw_rmse:.4f}m vs Reconstructed RMSE: {recon_rmse:.4f}m")
+    print(
+        f"\n[Reconstruction Benchmark] Raw RMSE: {raw_rmse:.4f}m vs Reconstructed RMSE: {recon_rmse:.4f}m"
+    )
     print(f"Relative Improvement: {relative_improvement:.2f}% (Target: >= 40.0%)")
 
     # Gate verification
@@ -113,11 +115,17 @@ def test_compromised_component_attribution_top3_accuracy(reconstruction_suite):
         if any(t in top3_ids for t in targets):
             hits += 1
         else:
-            print(f"Attribution Miss in {sc_def.scenario_id}: True targets {targets} not in top-3 {top3_ids}")
+            print(
+                f"Attribution Miss in {sc_def.scenario_id}: True targets {targets} not in top-3 {top3_ids}"
+            )
 
     top3_acc = (hits / total) * 100.0
-    print(f"\n[Attribution Benchmark] Top-3 Accuracy: {top3_acc:.1f}% ({hits}/{total}) (Target: >= 80.0%)")
-    assert top3_acc >= 80.0, f"Phase 4 Gate Failure: Top-3 attribution accuracy {top3_acc:.1f}% is below 80.0%"
+    print(
+        f"\n[Attribution Benchmark] Top-3 Accuracy: {top3_acc:.1f}% ({hits}/{total}) (Target: >= 80.0%)"
+    )
+    assert top3_acc >= 80.0, (
+        f"Phase 4 Gate Failure: Top-3 attribution accuracy {top3_acc:.1f}% is below 80.0%"
+    )
 
 
 def test_uncertainty_quantification_coverage(reconstruction_suite):
