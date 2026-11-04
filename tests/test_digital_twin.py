@@ -33,7 +33,7 @@ def test_network_topology_structure(twin_fixture):
     # Verify zones
     zones = twin_fixture.get_distribution_zones()
     assert len(zones) >= 3, "Network must segment into at least 3 distinct operational zones"
-    for zone_id, zone_data in zones.items():
+    for _zone_id, zone_data in zones.items():
         assert "junctions" in zone_data
         assert "target_pressure_min_m" in zone_data
         assert len(zone_data["junctions"]) > 0
@@ -52,7 +52,11 @@ def test_sensor_registry_coverage(twin_fixture):
 
     # Each tank must have a level sensor
     for tank_name in twin_fixture.model.tank_name_list:
-        tank_sensors = [s for s in sensors.values() if s.element_id == tank_name and s.sensor_type == SensorType.TANK_LEVEL]
+        tank_sensors = [
+            s
+            for s in sensors.values()
+            if s.element_id == tank_name and s.sensor_type == SensorType.TANK_LEVEL
+        ]
         assert len(tank_sensors) >= 1, f"Tank {tank_name} missing level transmitter"
 
     # Each pump must have a flow meter or status sensor
@@ -65,7 +69,7 @@ def test_baseline_hydraulic_simulation_reproducibility(twin_fixture):
     """Verify that extended period simulation produces deterministic, reproducible hydraulics."""
     sim_hours = 24
     res1 = twin_fixture.simulate_baseline(duration_hours=sim_hours)
-    
+
     twin2 = WaterNetworkTwin(seed=42)
     res2 = twin2.simulate_baseline(duration_hours=sim_hours)
 
@@ -86,7 +90,7 @@ def test_hydraulic_mass_conservation(twin_fixture):
     """Verify conservation of mass: inflows minus demands match tank storage rate of change."""
     sim_hours = 24
     results = twin_fixture.simulate_baseline(duration_hours=sim_hours)
-    
+
     pressures = results.node["pressure"]
     # Verify no negative pressures in baseline simulation
     for junc in twin_fixture.model.junction_name_list:
@@ -112,3 +116,22 @@ def test_diurnal_demand_pattern_dynamics(twin_fixture):
     max_demand = total_demand.max()
     min_demand = total_demand.min()
     assert max_demand > 1.3 * min_demand, "Diurnal demand curve must exhibit at least 30% dynamic range"
+
+
+def test_telemetry_matrix_extraction(twin_fixture):
+    """Verify that telemetry matrix is correctly structured with noisy and clean values."""
+    results = twin_fixture.simulate_baseline(duration_hours=24)
+    df_noisy = twin_fixture.extract_telemetry(results, add_noise=True)
+    df_clean = twin_fixture.extract_telemetry(results, add_noise=False)
+
+    assert len(df_noisy) == 25  # 0h to 24h inclusive
+    assert len(df_clean) == 25
+
+    # Check columns match sensor registry
+    expected_sensors = set(twin_fixture.sensors.keys())
+    assert set(df_noisy.columns) == expected_sensors
+
+    # Check subtle noise was added to continuous measurements
+    diff = np.abs(df_noisy["P_J1"] - df_clean["P_J1"])
+    assert (diff > 0.0).any(), "Noisy telemetry must exhibit subtle sensor perturbation"
+    assert (diff < 2.0).all(), "Sensor noise must remain within realistic physical bounds"
