@@ -1,0 +1,7 @@
+{
+  "required_dirs_present": 7,
+  "total_required_dirs": 7,
+  "pyproject_valid": 1.0,
+  "ci_workflow_valid": 1.0,
+  "scaffold_complete": 1.0
+}

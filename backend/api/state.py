@@ -68,17 +68,26 @@ class SystemState:
         )
         self.cached_recs: list[VerifiedRecommendation] = []
         self.approval_records: dict[str, dict[str, Any]] = {}
+        self.cached_frame: dict[str, Any] | None = None
+        self.cached_frame_hour: int | None = None
 
     def load_scenario(self, scenario_id: str) -> None:
         self.active_scenario = self.registry.generate_scenario(scenario_id)
         self.replay.set_scenario(scenario_id)
         self.cached_recs = []
+        self.cached_frame = None
+        self.cached_frame_hour = None
 
     def get_current_frame(self) -> dict[str, Any]:
         """Calculates current timestep frame based on replay hour."""
         hour = self.replay.current_hour
         telemetry_df = self.active_scenario.telemetry
         hour_clamped = min(hour, len(telemetry_df) - 1)
+
+        if self.cached_frame is not None and self.cached_frame_hour == hour_clamped:
+            self.cached_frame["is_playing"] = self.replay.is_playing
+            self.cached_frame["speed"] = self.replay.speed
+            return self.cached_frame
 
         # Slice telemetry up to current hour
         sub_telemetry = telemetry_df.iloc[: hour_clamped + 1]
@@ -100,7 +109,7 @@ class SystemState:
         # Raw telemetry row
         raw_row = {col: float(telemetry_df[col].iloc[hour_clamped]) for col in telemetry_df.columns}
 
-        return {
+        frame = {
             "timestamp": float(telemetry_df.index[hour_clamped]),
             "current_hour": hour_clamped,
             "max_hours": self.replay.max_hours,
@@ -132,6 +141,10 @@ class SystemState:
                 "explainer": res.explainer.model_dump(),
             },
         }
+
+        self.cached_frame = frame
+        self.cached_frame_hour = hour_clamped
+        return frame
 
 
 _GLOBAL_STATE: SystemState | None = None

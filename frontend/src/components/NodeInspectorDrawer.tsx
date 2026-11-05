@@ -53,6 +53,7 @@ export const NodeInspectorDrawer: React.FC = () => {
         </div>
         <button
           onClick={() => setSelectedElementId(null)}
+          aria-label="Close element inspector"
           className="p-1 rounded hover:bg-stone/30 dark:hover:bg-basalt-subtle text-text-muted hover:text-ink dark:hover:text-bone"
         >
           <X className="w-4 h-4" />

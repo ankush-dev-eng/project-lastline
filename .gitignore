@@ -67,6 +67,9 @@ playwright/.cache/
 Thumbs.db
 ehthumbs.db
 
+# Sealed Evaluation Seed (agent must never inspect or commit)
+.sealed_seed
+
 # Large Datasets and Logs (> 50MB)
 *.log
 data/raw/*

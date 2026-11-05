@@ -1,0 +1,9 @@
+{
+  "raw_rmse": 10.71069407128339,
+  "recon_rmse": 0.23613339803184832,
+  "relative_improvement": 97.7953492419791,
+  "top3_attribution_acc": 90.9090909090909,
+  "attribution_hits": 10,
+  "attribution_total": 11,
+  "is_sealed": 1.0
+}

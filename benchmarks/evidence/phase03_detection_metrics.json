@@ -1,0 +1,14 @@
+{
+  "engine_f1": 0.6923076923076924,
+  "engine_prec": 0.5294117647058824,
+  "engine_rec": 1.0,
+  "engine_fpr": 0.5,
+  "engine_ttd": 0.0,
+  "baseline_f1": 0.5,
+  "baseline_prec": 1.0,
+  "baseline_rec": 0.3333333333333333,
+  "baseline_fpr": 0.0,
+  "baseline_ttd": 18.0,
+  "test_cases_count": 4.0,
+  "is_sealed": 1.0
+}
