@@ -60,6 +60,7 @@ export const ReplayControlBar: React.FC = () => {
         <div className="flex items-center space-x-1">
           <button
             onClick={stepBackward}
+            aria-label="Step Backward (1 hr)"
             className="p-1 rounded hover:bg-stone/30 dark:hover:bg-basalt-subtle text-ink dark:text-bone"
             title="Step Backward (1 hr)"
           >
@@ -68,6 +69,7 @@ export const ReplayControlBar: React.FC = () => {
 
           <button
             onClick={isPlaying ? pause : play}
+            aria-label={isPlaying ? 'Pause Simulation' : 'Play Simulation'}
             className={`p-1.5 rounded text-white ${
               isPlaying ? 'bg-copper hover:bg-copper/90' : 'bg-sage hover:bg-sage-hover'
             }`}
@@ -78,6 +80,7 @@ export const ReplayControlBar: React.FC = () => {
 
           <button
             onClick={stepForward}
+            aria-label="Step Forward (1 hr)"
             className="p-1 rounded hover:bg-stone/30 dark:hover:bg-basalt-subtle text-ink dark:text-bone"
             title="Step Forward (1 hr)"
           >
@@ -93,6 +96,7 @@ export const ReplayControlBar: React.FC = () => {
             max={maxHours}
             step={1}
             value={currentHour}
+            aria-label="Simulation timeline scrubber"
             onChange={(e) => seekHour(Number(e.target.value))}
             className="w-full h-1.5 bg-stone dark:bg-basalt-subtle rounded-lg appearance-none cursor-pointer accent-sage"
           />
