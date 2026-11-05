@@ -98,7 +98,25 @@ LASTLINE coordinates six specialized, deterministic agents that operate over a s
 
 ## 4. End-to-End Incident Response Lifecycle
 
-![Incident Response Flowchart](assets/demo-flowchart.svg)
+![Incident Response Lifecycle](assets/incident-lifecycle.svg)
+
+```
+   [ 01. SCADA INGESTION ] ──► Ingest 22 pressure/flow sensors from 4 municipal PLCs
+              │
+              ▼
+   [ 02. ATTACK ISOLATION ] ──► Diurnal statistical residual > 4.5σ; quarantine sensor P_J7
+              │
+              ▼
+   [ 03. STATE RECONSTRUCTION ] ─► Bayesian WLS hydraulic state reconstruction (97.8% RMSE drop)
+              │
+              ▼
+   [ 04. TWIN PRE-SIMULATION ] ──► EPANET dynamic hydraulic verification; enforce P ≥ 15m
+              │
+              ▼
+   [ 05. OPERATOR SIGN-OFF ] ───► Explainable evidence sheet; SHA-256 audit log; HITL approval
+```
+
+![Detailed Incident Walkthrough](assets/demo-flowchart.svg)
 
 1. **Adversary Action**: Constant $+18.2\text{m}$ pressure bias injected into Hospital Junction sensor `P_J7` via compromised PLC 2.
 2. **Detection & Quarantine**: The Integrity Agent computes a statistical residual exceeding $4.5\sigma$ from the diurnal mean, dropping trust $T(P_{J7}) \rightarrow 0.00$.
@@ -208,16 +226,25 @@ The frontend is built as calm, trustworthy operations software adhering strictly
 
 1. **Start the FastAPI Backend (REST + WebSockets):**
    ```bash
+   # Standard port (8000):
    python -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8000
+
+   # Or dedicated development port (8899):
+   python -m uvicorn backend.api.main:app --host 127.0.0.1 --port 8899
    ```
-   API Documentation is available at `http://localhost:8000/docs`.
+   API Documentation is available at `http://localhost:8000/docs` (or `http://localhost:8899/docs`).
 
 2. **Start the React Control Room UI:**
    ```bash
+   # Standard port (5173):
    cd frontend
    npm run dev
+
+   # Or dedicated development port (7788):
+   cd frontend
+   npm run dev -- --host 127.0.0.1 --port 7788
    ```
-   Open `http://localhost:5173` in your browser.
+   Open `http://localhost:5173` (or `http://localhost:7788`) in your browser.
 
 ---
 
