@@ -7,6 +7,21 @@
       .step-title { font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 13px; fill: #14181B; }
       .step-desc { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #576067; }
       .step-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; }
+      @keyframes dashflow {
+        0% { stroke-dashoffset: 24; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse-alert {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+      .flow-connector {
+        stroke-dasharray: 6 3;
+        animation: dashflow 1.2s linear infinite;
+      }
+      .alert-glow {
+        animation: pulse-alert 1.5s ease-in-out infinite;
+      }
     </style>
     <marker id="flowarr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#6F8F7B" />
@@ -31,11 +46,11 @@
     <text class="step-desc" x="12" y="104">• +18.2m false bias</text>
     <text class="step-desc" x="12" y="120">• Target: PLC_2</text>
     
-    <rect x="12" y="155" width="141" height="30" rx="4" fill="#A8403A" fill-opacity="0.15" stroke="#A8403A" />
+    <rect x="12" y="155" width="141" height="30" rx="4" fill="#A8403A" fill-opacity="0.15" stroke="#A8403A" class="alert-glow" />
     <text class="step-tag" x="18" y="174" fill="#A8403A">SCADA CORRUPTED</text>
   </g>
 
-  <line x1="200" y1="185" x2="225" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+  <line x1="200" y1="185" x2="225" y2="185" stroke="#6F8F7B" stroke-width="2.5" class="flow-connector" marker-end="url(#flowarr)" />
 
   <!-- Step 2: Detection & Trust -->
   <g transform="translate(230, 85)">
@@ -52,7 +67,7 @@
     <text class="step-tag" x="18" y="174" fill="#C79A3B">SENSOR QUARANTINED</text>
   </g>
 
-  <line x1="400" y1="185" x2="425" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+  <line x1="400" y1="185" x2="425" y2="185" stroke="#6F8F7B" stroke-width="2.5" class="flow-connector" marker-end="url(#flowarr)" />
 
   <!-- Step 3: State Reconstruction -->
   <g transform="translate(430, 85)">
@@ -69,7 +84,7 @@
     <text class="step-tag" x="18" y="174" fill="#4F7A5A">GROUND TRUTH RESTORED</text>
   </g>
 
-  <line x1="600" y1="185" x2="625" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+  <line x1="600" y1="185" x2="625" y2="185" stroke="#6F8F7B" stroke-width="2.5" class="flow-connector" marker-end="url(#flowarr)" />
 
   <!-- Step 4: Twin Pre-Simulation -->
   <g transform="translate(630, 85)">
@@ -86,7 +101,7 @@
     <text class="step-tag" x="18" y="174" fill="#4F7A5A">HYDRAULICALLY VERIFIED</text>
   </g>
 
-  <line x1="800" y1="185" x2="825" y2="185" stroke="#6F8F7B" stroke-width="2" marker-end="url(#flowarr)" />
+  <line x1="800" y1="185" x2="825" y2="185" stroke="#6F8F7B" stroke-width="2.5" class="flow-connector" marker-end="url(#flowarr)" />
 
   <!-- Step 5: HITL Operator Signoff -->
   <g transform="translate(830, 85)">
