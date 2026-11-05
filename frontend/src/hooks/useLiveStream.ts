@@ -17,7 +17,7 @@ export function useLiveStream(enabled: boolean = true) {
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || import.meta.env.MODE === 'test') return;
 
     let isUnmounted = false;
 

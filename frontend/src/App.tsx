@@ -9,9 +9,10 @@ import { AgentReasoningView } from './components/AgentReasoningView';
 import { TwinLabView } from './components/TwinLabView';
 import { RecommendationPanel } from './components/RecommendationPanel';
 import { AuditLogView } from './components/AuditLogView';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { ShieldCheck, Info } from 'lucide-react';
 
-export const App: React.FC = () => {
+export const AppContent: React.FC = () => {
   const { isDark, activeView, selectedElementId, initStore } = useLastlineStore();
 
   // Initialize store and establish WebSocket stream
@@ -75,5 +76,11 @@ export const App: React.FC = () => {
     </div>
   );
 };
+
+export const App: React.FC = () => (
+  <ErrorBoundary>
+    <AppContent />
+  </ErrorBoundary>
+);
 
 export default App;
