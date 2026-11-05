@@ -24,10 +24,12 @@ class VerifiedRecommendation(BaseModel):
     title: str
     description: str
     target_zone: str
+    recommended_actions: list[str] = Field(default_factory=list)
     simulated_safe: bool = True
     simulation_proof: dict[str, Any] = Field(default_factory=dict)
     evidence: EvidencePair
     confidence: float = Field(ge=0.0, le=1.0)
+    confidence_score: float = Field(default=0.95)
     requires_human_approval: bool = True
     is_advisory: bool = True
     approval_status: str = "PENDING_APPROVAL"
@@ -95,11 +97,17 @@ class RecommendationEngine:
 
             confidence = 0.94 if severity in (SeverityLevel.HIGH, SeverityLevel.CRITICAL) else 0.88
 
+            actions = [
+                f"Inspect and calibrate {i.element_type.upper()} '{i.element_id}': configure {i.parameter} to {i.target_value}"
+                for i in pb.interventions
+            ] or [f"Execute standard operating procedure for {pb.name}"]
+
             rec = VerifiedRecommendation(
                 playbook_id=pb.playbook_id,
                 title=pb.name,
                 description=pb.description,
                 target_zone=pb.target_zone,
+                recommended_actions=actions,
                 simulated_safe=True,
                 simulation_proof={
                     "min_pressure_m": sim_res.min_pressure_observed_m,
@@ -117,6 +125,7 @@ class RecommendationEngine:
                     key_assumptions=assumptions,
                 ),
                 confidence=confidence,
+                confidence_score=confidence,
                 requires_human_approval=True,
                 is_advisory=True,
                 approval_status="PENDING_APPROVAL",

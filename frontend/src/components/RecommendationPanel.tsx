@@ -74,12 +74,21 @@ export const RecommendationPanel: React.FC = () => {
                 PRE-APPROVED OPERATOR PROCEDURE:
               </span>
               <ul className="space-y-1 text-xs text-ink dark:text-bone">
-                {rec.recommended_actions.map((act, idx) => (
-                  <li key={idx} className="flex items-start space-x-2">
-                    <span className="text-sage font-mono font-bold">{idx + 1}.</span>
-                    <span>{act}</span>
+                {(rec.recommended_actions?.length ?? 0) > 0 ? (
+                  rec.recommended_actions?.map((act, idx) => (
+                    <li key={idx} className="flex items-start space-x-2">
+                      <span className="text-sage font-mono font-bold">{idx + 1}.</span>
+                      <span>{act}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="flex items-start space-x-2 text-text-muted italic">
+                    <span className="text-sage font-mono font-bold">1.</span>
+                    <span>
+                      Standard procedure for {rec.playbook_id}: verify local telemetry and inspect zone boundary valves.
+                    </span>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -123,14 +132,18 @@ export const RecommendationPanel: React.FC = () => {
               <div className="p-3 rounded bg-bone dark:bg-ink-muted/30 border border-stone/40 dark:border-basalt-subtle space-y-1.5">
                 <span className="font-mono font-bold text-copper flex items-center space-x-1 text-[11px]">
                   <AlertTriangle className="w-3.5 h-3.5" />
-                  <span>ASSUMPTIONS ({rec.evidence?.assumptions?.length ?? 0})</span>
+                  <span>
+                    ASSUMPTIONS ({rec.evidence?.assumptions?.length ?? (rec.evidence as any)?.key_assumptions?.length ?? 0})
+                  </span>
                 </span>
                 <ul className="space-y-1 text-text-muted text-[11px] list-disc list-inside">
-                  {rec.evidence?.assumptions?.map((a, idx) => (
-                    <li key={idx} className="leading-snug">
-                      {a}
-                    </li>
-                  ))}
+                  {(rec.evidence?.assumptions || (rec.evidence as any)?.key_assumptions || []).map(
+                    (a: string, idx: number) => (
+                      <li key={idx} className="leading-snug">
+                        {a}
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
             </div>
@@ -149,7 +162,7 @@ export const RecommendationPanel: React.FC = () => {
                 <div className="text-xs font-mono">
                   Confidence Score:{' '}
                   <span className="font-bold text-moss">
-                    {(rec.confidence_score * 100).toFixed(0)}%
+                    {(((rec.confidence_score ?? (rec as any).confidence ?? 0.95)) * 100).toFixed(0)}%
                   </span>
                 </div>
               </div>

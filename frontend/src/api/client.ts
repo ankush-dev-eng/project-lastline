@@ -19,7 +19,7 @@ import type {
   ReplayStatus,
 } from '../types';
 
-const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:8899/api';
+const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || (import.meta.env?.MODE === 'test' ? 'http://localhost:59999/api' : 'http://localhost:8899/api');
 
 // Realistic Fallback Topology matching Verdant City Water System
 export const MOCK_TOPOLOGY: NetworkTopology = {
