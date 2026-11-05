@@ -24,7 +24,7 @@ export function useLiveStream(enabled: boolean = true) {
     function connect() {
       try {
         setConnectionStatus('CONNECTING');
-        const wsUrl = 'ws://localhost:8000/ws/live';
+        const wsUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WS_URL) || 'ws://localhost:8899/ws/live';
         const ws = new WebSocket(wsUrl);
         socketRef.current = ws;
 
