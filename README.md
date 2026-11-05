@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=24513B&height=120&section=header&text=PROJECT%20LASTLINE&fontSize=36&fontColor=F3F1EA&fontAlignY=45&desc=AI-DRIVEN%20CYBER-RESILIENCE%20%26%20FAIL-OPERATIONAL%20INTELLIGENCE&descAlignY=70&descSize=13&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=24513B&height=120&section=header&text=PROJECT%20LASTLINE&fontSize=36&fontColor=F3F1EA&fontAlignY=45&desc=AI-DRIVEN%20CYBER-RESILIENCE%20AND%20FAIL-OPERATIONAL%20INTELLIGENCE&descAlignY=70&descSize=13&animation=fadeIn" width="100%"/>
 
 <br/>
 
