@@ -1,0 +1,14 @@
+{
+  "num_junctions": 12,
+  "num_tanks": 2,
+  "num_reservoirs": 1,
+  "num_pumps": 2,
+  "num_valves": 1,
+  "num_pipes": 16,
+  "num_sensors": 22,
+  "sim_hours": 24,
+  "min_delivery_pressure_m": 16.47023582458496,
+  "max_delivery_pressure_m": 90.2938003540039,
+  "pressure_constraint_satisfied": 1.0,
+  "hydraulic_convergence_pass": 1.0
+}

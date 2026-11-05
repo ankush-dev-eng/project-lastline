@@ -1,0 +1,7 @@
+{
+  "backend_coverage_percent": 94.69964664310955,
+  "num_statements_audited": 1132,
+  "pytest_tests_passed": 45,
+  "pytest_tests_total": 45,
+  "stride_threat_model_complete": 1.0
+}

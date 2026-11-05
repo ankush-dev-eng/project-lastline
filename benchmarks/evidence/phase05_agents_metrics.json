@@ -1,0 +1,7 @@
+{
+  "mean_cycle_latency_ms": 399.322024999492,
+  "audit_integrity_pass": 1.0,
+  "tamper_detection_rate": 100.0,
+  "advisory_safety_rate": 100.0,
+  "total_audit_entries": 30
+}

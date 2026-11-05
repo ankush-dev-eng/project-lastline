@@ -1,0 +1,7 @@
+{
+  "safe_playbooks_pass_rate": 100.0,
+  "unsafe_playbooks_rejection_rate": 100.0,
+  "shown_recommendations_constraint_satisfaction": 100.0,
+  "shown_recommendations_count": 10.0,
+  "mean_presim_latency_ms": 401.9694250005159
+}

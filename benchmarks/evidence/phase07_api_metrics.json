@@ -1,0 +1,6 @@
+{
+  "p95_latency_ms": 15.720700001111254,
+  "mean_latency_ms": 20.90155888882792,
+  "ws_frame_latency_s": 0.0016169000009540468,
+  "read_only_safety_score": 100.0
+}
