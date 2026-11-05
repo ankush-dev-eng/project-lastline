@@ -1,18 +1,30 @@
-# PROJECT LASTLINE
-### AI-Driven Cyber-Resilience and Fail-Operational Intelligence for Critical Water Infrastructure
+<div align="center">
 
-[![CI](https://github.com/ankush-dev-eng/project-lastline/actions/workflows/ci.yml/badge.svg)](https://github.com/ankush-dev-eng/project-lastline/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-6F8F7B.svg)](LICENSE)
-[![Safety: Sandboxed Advisory](https://img.shields.io/badge/Safety-Sandboxed%20Advisory%20Only-A8403A.svg)](#hard-safety-rule-sandboxed--advisory-only)
-[![Python: 3.12](https://img.shields.io/badge/Python-3.12-1D2327.svg)](https://python.org)
-[![Digital Twin: WNTR + EPANET](https://img.shields.io/badge/Digital%20Twin-WNTR%20%2B%20EPANET-4F7A5A.svg)](https://wntr.readthedocs.io)
-[![Backend Tests: 45 Passed](https://img.shields.io/badge/Backend%20Tests-45%20Passed%20(95%25%20cov)-4F7A5A.svg)](tests/)
-[![Frontend Tests: 7 Passed](https://img.shields.io/badge/Frontend%20Tests-7%20Passed-4F7A5A.svg)](frontend/src/__tests__/)
-[![Coverage: 95%](https://img.shields.io/badge/Coverage-95.0%25-4F7A5A.svg)](BENCHMARKS.md)
+<img src="https://capsule-render.vercel.app/api?type=waving&color=24513B&height=120&section=header&text=PROJECT%20LASTLINE&fontSize=36&fontColor=F3F1EA&fontAlignY=45&desc=AI-DRIVEN%20CYBER-RESILIENCE%20%26%20FAIL-OPERATIONAL%20INTELLIGENCE&descAlignY=70&descSize=13&animation=fadeIn" width="100%"/>
+
+<br/>
+
+[![CI](https://img.shields.io/badge/CI-PASSING-4F7A5A?style=for-the-badge&logo=github-actions&logoColor=white&labelColor=17171B)](https://github.com/ankush-dev-eng/project-lastline/actions)
+[![License](https://img.shields.io/badge/LICENSE-MIT-6F8F7B?style=for-the-badge&labelColor=17171B)](LICENSE)
+[![Safety](https://img.shields.io/badge/SAFETY-SANDBOXED%20ADVISORY-A8403A?style=for-the-badge&labelColor=17171B)](#hard-safety-rule-sandboxed--advisory-only)
+[![Python](https://img.shields.io/badge/PYTHON-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=17171B)](https://python.org)
+[![Digital Twin](https://img.shields.io/badge/DIGITAL_TWIN-WNTR%20%2B%20EPANET-4F7A5A?style=for-the-badge&labelColor=17171B)](https://wntr.readthedocs.io)
+
+<br/>
+
+[![Backend Tests](https://img.shields.io/badge/BACKEND_TESTS-45%20PASSED-4F7A5A?style=for-the-badge&labelColor=17171B)](tests/)
+[![Frontend Tests](https://img.shields.io/badge/FRONTEND_TESTS-7%20PASSED-4F7A5A?style=for-the-badge&labelColor=17171B)](frontend/src/__tests__/)
+[![Coverage](https://img.shields.io/badge/COVERAGE-95.0%25-4F7A5A?style=for-the-badge&labelColor=17171B)](BENCHMARKS.md)
+
+</div>
 
 ---
 
-![PROJECT LASTLINE Banner](assets/hero-banner.svg)
+<div align="center">
+
+<img src="assets/hero-banner.svg" alt="PROJECT LASTLINE Operational Canvas" width="100%"/>
+
+</div>
 
 ---
 
@@ -260,3 +272,21 @@ Architecture Decision Records (ADRs) are documented under [`docs/adr/`](docs/adr
 ## 9. License
 
 This project is licensed under the terms of the **MIT License**. See [`LICENSE`](LICENSE) for details.
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=24513B&height=3" width="100%"/>
+
+<br/><br/>
+
+# PROJECT LASTLINE
+
+**PHYSICS-CONSTRAINED CYBER-RESILIENCE • ZERO PHYSICAL ACTUATION**
+
+<br/>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=24513B&height=100&section=footer" width="100%"/>
+
+</div>
